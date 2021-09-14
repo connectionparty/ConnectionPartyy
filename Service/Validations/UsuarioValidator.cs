@@ -12,9 +12,10 @@ namespace Service.Validations
     {
         public UsuarioValidator()
         {
-            RuleFor(c => c.Nome).NotEmpty().NotNull().MinimumLength(3).MaximumLength(70);
-            RuleFor(c => c.Email).NotEmpty().EmailAddress();
-            RuleFor(c => c.Senha).NotEmpty().MaximumLength(20);
+            RuleFor(c => c.Nome).NotNull().MinimumLength(3).MaximumLength(70);
+            RuleFor(c => c.Email).EmailAddress().NotNull().MaximumLength(100).WithMessage("Email inválido.");
+            RuleFor(c => c.Senha).NotEmpty().NotNull().MaximumLength(20);
+            RuleFor(c => c.Telefone).NotNull().MinimumLength(8).MaximumLength(15);
         }
     }
 }

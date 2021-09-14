@@ -14,5 +14,6 @@ namespace Service.Interfaces
         Task<DataResponse<Usuario>> LerGeneros();
         Task<SingleResponse<Usuario>> GetByID(int id);
         Task<Response> Update(Usuario u);
+        Task<SingleResponse<Usuario>> Authenticate(string email, string senha);
     }
 }

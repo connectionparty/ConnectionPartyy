@@ -16,9 +16,42 @@ namespace Service
 {
     public class UsuarioService : IUsuarioService
     {
+        public async Task<SingleResponse<Usuario>> Authenticate(string email, string senha)
+        {
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Usuario usuario = await db.Usuarios.FirstOrDefaultAsync(c => c.Email == email && c.Senha == senha);
+                    if (usuario == null)
+                    {
+                        return new SingleResponse<Usuario>()
+                        {
+                            Mensagem = "Usuário e/ou senha inválidos.",
+                            Success = false
+                        };
+                    }
+                    return new SingleResponse<Usuario>()
+                    {
+                        Mensagem = "Usuário encontrado!",
+                        Success = true,
+                        Item = usuario
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new SingleResponse<Usuario>()
+                {
+                    Mensagem = "Erro no banco de dados, contate o administrador",
+                    Success = false
+                };
+            }
+        }
+
         public async Task<Response> Cadastrar(Usuario usuario)
         {
-            UsuarioValidator validation = new GeneroValidator();
+            UsuarioValidator validation = new UsuarioValidator();
             ValidationResult result = validation.Validate(usuario);
 
             Response r = result.ToResponse();
@@ -41,7 +74,7 @@ namespace Service
                             Mensagem = "Esse email já foi cadastrado."
                         };
                     }
-
+                    usuario.DataCadastro = DateTime.Now;
                     db.Usuarios.Add(usuario);
                     await db.SaveChangesAsync();
                     return new Response()
@@ -61,6 +94,7 @@ namespace Service
                 };
             }
         }
+
 
         public Task<SingleResponse<Usuario>> GetByID(int id)
         {

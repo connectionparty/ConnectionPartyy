@@ -26,8 +26,19 @@ namespace MVCPresentationLayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAuthentication("CookieAuthentication").AddCookie("CookieAuthentication", config =>
+             {
+                 config.Cookie.Name = "UserLoginCookie";
+                 config.LoginPath = "/User/Login";
+                 config.AccessDeniedPath = "/User/SemPermissao";
+             });
             services.AddTransient<IUsuarioService, UsuarioService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddHttpContextAccessor();
+            services.AddMvc();
+            services.AddSession();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +55,8 @@ namespace MVCPresentationLayer
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
