@@ -1,0 +1,101 @@
+﻿@{
+   ViewData["Title"]  = "Cadastro de Usuário";
+}
+
+
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            @*<div class="col-md-6">*@
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Register</h1>
+                                </div>
+                                <form method="post">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" name="Nome" class="form-control" id="exampleInputFirstName" placeholder="Enter First Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Telefone celular</label>
+                                        <input type="text" class="form-control" name="Telefone" id="exampleInputLastName" placeholder="Enter your telephone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="Email" id="exampleInputEmail" aria-describedby="emailHelp"
+                                               placeholder="Enter Email Address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" name="Senha" id="exampleInputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Repeat Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPasswordRepeat"
+                                               placeholder="Repeat Password">
+                                    </div>
+                                    <div>
+                                        <label>Data de nascimento</label>
+                                        <input type="date" name="DataNascimento" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <label>Gênero</label>
+                                        <select name="Genero" class="form-control">
+                                            @{ string[] generos = Enum.GetNames(typeof(Domains.Enums.Genero)); }
+                                            @for (int i = 0; i < generos.Length; i++)
+                                            {
+                                                <option value="@i">
+                                                    @generos[i].Replace("_", " ");
+                                                </option>
+}
+                                        </select>
+                                    </div>
+                                    <br />
+                                    @*<select name=” optionlist ” onChange=”combo(this, ’demo’)”>
+                                    <option>option 1</option>
+                                    <option>option 2</option>
+                                    <option>option 3</option>
+                                    <option> option 4 </option>
+                                    <option> option 5 </option>
+                                    </select>*@
+
+                                    @{
+                                        if (ViewBag.Error != null)
+                                        {
+                                            <div class="form-group">
+                                                <label class="error">@ViewBag.Error</label>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary btn-block" value="Registrar">
+                                    </div>
+                                    <hr>
+                                    <a href="index.html" class="btn btn-google btn-block">
+                                        <i class="fab fa-google fa-fw"></i> Register with Google
+                                    </a>
+                                    <a href="index.html" class="btn btn-facebook btn-block">
+                                        <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                    </a>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="font-weight-bold small" href="login.html">Already have an account?</a>
+                                </div>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Register Content -->
