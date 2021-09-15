@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    public interface IUsuarioService
+    public interface IEventoService
     {
-        Task<Response> Cadastrar(Usuario u);
-        Task<DataResponse<Usuario>> LerUsuarios();
+        Task<Response> Cadastrar(Evento e);
+        Task<DataResponse<Evento>> LerEventos();
         Task<SingleResponse<Usuario>> GetByID(int id);
-        Task<Response> Update(Usuario u);
-        Task<SingleResponse<Usuario>> Authenticate(string email, string senha);
+        Task<Response> Update(Evento e);
     }
 }

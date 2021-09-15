@@ -16,6 +16,7 @@ namespace Domains
         public string Endereco { get; set; }
         public Usuario Organizador { get; set; }
         public int UsuarioID { get; set; }
+        public bool PublicoOuPrivado { get; set; }
         public ICollection<Usuario> Participantes { get; set; }
         public int Likes { get; set; }
         public int Dislikes{ get; set; }

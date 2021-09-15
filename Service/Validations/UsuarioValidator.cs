@@ -12,10 +12,10 @@ namespace Service.Validations
     {
         public UsuarioValidator()
         {
-            RuleFor(c => c.Nome).NotNull().MinimumLength(3).MaximumLength(70);
+            RuleFor(c => c.Nome).NotNull().MinimumLength(3).MaximumLength(70).WithMessage("Nome deve conter entre 3 e 70 caracteres.");
             RuleFor(c => c.Email).EmailAddress().NotNull().MaximumLength(100).WithMessage("Email inválido.");
-            RuleFor(c => c.Senha).NotEmpty().NotNull().MaximumLength(20);
-            RuleFor(c => c.Telefone).NotNull().MinimumLength(8).MaximumLength(15);
+            RuleFor(c => c.Senha).NotEmpty().MaximumLength(20).WithMessage("Senha é um campo obrigatótio e deve conter no máximo 20 caracteres.");
+            RuleFor(c => c.Telefone).NotNull().MinimumLength(8).MaximumLength(15).WithMessage("Telefone deve conter entre 8 e 15 números.");
         }
     }
 }

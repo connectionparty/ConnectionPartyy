@@ -101,7 +101,7 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public Task<DataResponse<Usuario>> LerGeneros()
+        public Task<DataResponse<Usuario>> LerUsuarios()
         {
             throw new NotImplementedException();
         }

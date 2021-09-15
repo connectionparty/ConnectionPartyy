@@ -15,6 +15,8 @@ namespace MVCPresentationLayer.Infrastructure
         {
             CreateMap<UsuarioInsertViewModel, Usuario>();
             CreateMap<Usuario, UsuarioQueryViewModel>();
+            CreateMap<EventoInsertViewModel, Evento>();
+            CreateMap<Evento, EventoInsertViewModel>();
         }
     }
 }
