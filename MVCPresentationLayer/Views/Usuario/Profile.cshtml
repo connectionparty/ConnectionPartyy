@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Profile";
+}
+    
+    @if (User.Identity.IsAuthenticated)
+            {
+                string id = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                string filePath = "~/imgPessoa/" + id + ".jpg";
+                Url.Content(filePath);
+
+    <div class="text-center">
+        <img src="@Url.Content(filePath)" alt="account"style="max-height: 90px">
+        <h4 class="pt-3">save your <b>imagination</b> here!</h4>
+    </div>
+    }

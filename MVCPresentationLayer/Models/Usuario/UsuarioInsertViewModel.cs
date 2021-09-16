@@ -1,5 +1,6 @@
 ﻿using Domains;
 using Domains.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace MVCPresentationLayer.Models
         public string Senha { get; set; }
         public DateTime DataNascimento { get; set; }
         public Genero Genero { get; set; }
+        public IFormFile Arquivo { get; set; }
     }
 }

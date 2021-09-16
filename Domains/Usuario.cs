@@ -17,7 +17,5 @@ namespace Domains
         public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<Evento> EventosParticipados{ get; set; }
         public ICollection<Evento> EventosCriados { get; set; }
-
-
     }
 }
