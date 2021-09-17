@@ -18,6 +18,12 @@ namespace MVCPresentationLayer.Controllers
             return View();
         }
 
+        public IActionResult Detalhes(int id)
+        {
+            return View();
+        }
+
+
         //[HttpPost]
         //public IActionResult Register()
         //{
