@@ -96,14 +96,55 @@ namespace Service
         }
 
 
-        public Task<SingleResponse<Usuario>> GetByID(int id)
+        public async Task<SingleResponse<Usuario>> GetByID(int id)
         {
-            throw new NotImplementedException();
+            SingleResponse<Usuario> response = new SingleResponse<Usuario>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Usuario usuario = await db.Usuarios.FindAsync(id);
+                    if (usuario == null)
+                    {
+                        response.Success = false;
+                        response.Mensagem = "Usuário não encontrado.";
+                        return response;
+                    }
+                    response.Success = true;
+                    response.Mensagem = "Usuário selecionado com sucesso.";
+                    response.Item = usuario;
+                }
+            }
+            catch (Exception)
+            {
+                response.Success = false;
+                response.Mensagem = "Erro no banco de dados, contate o adm.";
+            }
+            return response;
         }
 
-        public Task<DataResponse<Usuario>> LerUsuarios()
+        public async Task<DataResponse<Usuario>> LerUsuarios()
         {
-            throw new NotImplementedException();
+            DataResponse<Usuario> response = new DataResponse<Usuario>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+
+                    List<Usuario> Usuarios = await db.Usuarios.OrderBy(c => c.ID).ToListAsync();
+                    response.Data = Usuarios;
+                    response.Success = true;
+                    response.Mensagem = "Usuários selecionados com sucesso.";
+                }
+            }
+            catch (Exception)
+            {
+                response.Success = false;
+                response.Mensagem = "Erro no banco de dados, contate o adm.";
+            }
+            return response;
         }
 
         public Task<Response> Update(Usuario u)

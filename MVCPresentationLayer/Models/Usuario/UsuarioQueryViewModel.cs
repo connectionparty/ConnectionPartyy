@@ -16,7 +16,7 @@ namespace MVCPresentationLayer.Models.Usuario
         public Genero Genero { get; set; }
         public DateTime DataCadastro { get; set; }
         public ICollection<Comentario> Comentarios { get; set; }
-        public ICollection<Evento> EventosParticipados { get; set; }
-        public ICollection<Evento> EventosCriados { get; set; }
+        public ICollection<Domains.Evento> EventosParticipados { get; set; }
+        public ICollection<Domains.Evento> EventosCriados { get; set; }
     }
 }

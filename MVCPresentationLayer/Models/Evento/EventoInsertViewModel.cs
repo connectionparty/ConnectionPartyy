@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domains;
+using Microsoft.AspNetCore.Http;
 
 namespace MVCPresentationLayer.Models
 {
@@ -18,5 +19,6 @@ namespace MVCPresentationLayer.Models
         public string Endereco { get; set; }
         public int QtdMaximaPessoas { get; set; }
         public ICollection<Tags> Tags { get; set; }
+        public IFormFile Arquivo { get; set; } 
     }
 }

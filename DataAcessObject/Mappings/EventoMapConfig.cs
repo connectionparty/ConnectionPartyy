@@ -30,8 +30,8 @@ namespace DataAcessObject.Mappings
             builder.Property(c => c.QtdMaximaPessoas).IsRequired();
 
             builder.HasMany(c => c.Tags).WithMany(c => c.Eventos);
-          
 
+            builder.Property(c => c.EhPublico).IsRequired();
 
         }
     }

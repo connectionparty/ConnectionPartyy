@@ -14,7 +14,7 @@ namespace MVCPresentationLayer
 
         public static bool IsValidExtension(string fileName)
         {
-            return fileName.Contains(".jgp") || fileName.Contains(".png") || fileName.Contains(".jpeg") || fileName.Contains(".gif");
+            return fileName.Contains(".jpg") || fileName.Contains(".png") || fileName.Contains(".jpeg") || fileName.Contains(".gif");
         }
 
 
