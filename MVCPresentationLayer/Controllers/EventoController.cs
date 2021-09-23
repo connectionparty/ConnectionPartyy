@@ -18,6 +18,7 @@ namespace MVCPresentationLayer.Controllers
         private readonly IEventoService _eventoService;
         private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
+
         public EventoController(IEventoService eventoService, IMapper mapper, IHostingEnvironment appEnvironment)
         {
             this._eventoService = eventoService;
@@ -56,15 +57,9 @@ namespace MVCPresentationLayer.Controllers
             string id = evento.ID.ToString();
             string fullFileName = caminho_WebRoot + FileHelper.EVENTO_DIRECTORY + id;
 
+            Directory.CreateDirectory(fullFileName);
 
-
-
-            if (!Directory.Exists(fullFileName))
-            {
-                Directory.CreateDirectory(fullFileName);
-            }
-
-            using (FileStream stream = new FileStream(Directory.GetCurrentDirectory(), FileMode.Create))
+            using (FileStream stream = new FileStream(fullFileName + "\\1.jpg", FileMode.Create))
             {
                 await viewModel.Arquivo.CopyToAsync(stream);
             }

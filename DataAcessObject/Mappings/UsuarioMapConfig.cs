@@ -15,6 +15,9 @@ namespace DataAcessObject.Mappings
         {
             builder.Property(c => c.Nome).IsUnicode(false).HasMaxLength(70).IsRequired();
 
+            builder.Property(c => c.UserName).IsUnicode(false).HasMaxLength(20).IsRequired();
+            builder.HasIndex(c => c.UserName).IsUnique();
+
             builder.Property(c => c.Email).IsUnicode(false).HasMaxLength(100).IsRequired();
             builder.HasIndex(c => c.Email).IsUnique();
 
@@ -23,11 +26,13 @@ namespace DataAcessObject.Mappings
 
             builder.Property(c => c.Senha).IsUnicode(false).HasMaxLength(20).IsRequired();
 
-            builder.Property(c => c.DataNascimento).IsUnicode(false).IsRequired();
+            builder.Property(c => c.DataNascimento).IsRequired();
 
-            builder.Property(c => c.Genero).IsUnicode(false).IsRequired();
+            builder.Property(c => c.Genero).IsRequired();
 
-            builder.Property(c => c.DataCadastro).IsUnicode(false).IsRequired();
+            builder.Property(c => c.Endereco).IsUnicode(false).HasMaxLength(100).IsRequired();
+
+            builder.Property(c => c.DataCadastro).IsRequired();
 
             builder.HasMany(c => c.EventosCriados).WithOne(c => c.Organizador);
             builder.HasMany(c => c.EventosParticipados).WithMany(c => c.Participantes).UsingEntity<Dictionary<string, object>>("EventoUsuario",

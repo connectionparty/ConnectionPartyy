@@ -13,7 +13,8 @@ namespace Domains
         public string Telefone{ get; set; }
         public string Senha { get; set; }
         public DateTime DataNascimento { get; set; }
-        public Genero Genero{ get; set; }
+        public Genero Genero { get; set; }
+        public string Endereco { get; set; }
         public DateTime DataCadastro { get; set; }
         public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<Evento> EventosParticipados{ get; set; }

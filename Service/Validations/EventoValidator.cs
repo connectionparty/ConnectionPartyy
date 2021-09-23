@@ -16,7 +16,7 @@ namespace Service.Validations
             RuleFor(c => c.Descricao).NotNull().MinimumLength(10).MaximumLength(300).WithMessage("Descrição do evento é obrigatório e deve conter entre 10 e 300 caracteres");
             RuleFor(c => c.IdadeMinima).NotNull().WithMessage("Idade mínima deve ser informada.");
             RuleFor(c => c.Endereco).NotNull().MinimumLength(5).MaximumLength(100).WithMessage("Endereço deve ser informado e deve conter entre 5 e 100 caracteres.");
-            RuleFor(c => c.PrecisaApresentaDocumento).NotNull();
+            RuleFor(c => c.PrecisaApresentarDocumento).NotNull();
         }
     }
 }

@@ -132,7 +132,6 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-
                     List<Usuario> Usuarios = await db.Usuarios.OrderBy(c => c.ID).ToListAsync();
                     response.Data = Usuarios;
                     response.Success = true;

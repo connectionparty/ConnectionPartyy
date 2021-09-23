@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAcessObject.Migrations
 {
-    public partial class _2109 : Migration
+    public partial class _2309 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,7 +49,9 @@ namespace DataAcessObject.Migrations
                     Nome = table.Column<string>(type: "varchar(70)", unicode: false, maxLength: 70, nullable: false),
                     Descricao = table.Column<string>(type: "varchar(300)", unicode: false, maxLength: 300, nullable: false),
                     DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HoraInicio = table.Column<TimeSpan>(type: "time", nullable: false),
                     DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HoraFim = table.Column<TimeSpan>(type: "time", nullable: false),
                     Valor = table.Column<double>(type: "float", nullable: true),
                     IdadeMinima = table.Column<int>(type: "int", nullable: false),
                     PrecisaApresentaDocumento = table.Column<bool>(type: "bit", nullable: false),

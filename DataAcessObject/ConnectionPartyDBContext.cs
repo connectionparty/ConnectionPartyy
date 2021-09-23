@@ -9,7 +9,7 @@ namespace DataAcessObject
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C: \Users\Caio Fabeni\Desktop\ConnectionParty - d333d814a75248c92f13eae19401980be2e88c8f\ConnectionParty2.mdf;Integrated Security=True;Connect Timeout=30");
+            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='C: \Users\Caio Fabeni\Desktop\ConnectionParty - d333d814a75248c92f13eae19401980be2e88c8f\ConnectionParty2.mdf';Integrated Security=True;Connect Timeout=30");
             base.OnConfiguring(optionsBuilder);
         }
 

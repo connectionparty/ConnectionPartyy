@@ -89,6 +89,12 @@ namespace DataAcessObject.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<TimeSpan>("HoraFim")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HoraInicio")
+                        .HasColumnType("time");
+
                     b.Property<int>("IdadeMinima")
                         .HasColumnType("int");
 

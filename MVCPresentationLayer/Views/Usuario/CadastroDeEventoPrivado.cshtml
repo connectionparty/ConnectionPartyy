@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="img/logo/logo.png" rel="icon">
+    <title>ConnectionParty - Cadastro De Evento Privado</title>
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        h1.container-black{
+            color: black;
+        }
+
+        h4.container-black{
+            color: black;
+        }
+
+        #widhei{
+            width: 500px;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .flex-item-1 {
+            flex: 1;
+        }
+        /* Flex Item */
+        .item {
+            margin: 5px;
+            background: tomato;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+        .center {
+            justify-content: center;
+        }
+        .flex-start {
+            justify-content: flex-start;
+            display: flex;
+            width: 70vw;
+            justify-content: space-around;
+        }
+
+        div.flex-content {
+            display: flex;
+        }
+        
+    </style>
+</head>
+
+<body>
+   
+
+    <div class="text-center">
+        <h1 class="container-black">CADASTRE SEU EVENTO</h1>
+    </div>
+    <br />
+    <form method="post">
+        
+        <br />
+        <div class="form-group">
+            <center><h4 class="container-black">Informações Gerais</h4></center>
+            <br />
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <br />
+            <label>Nome do Evento</label>
+            <input type="text" name="NomeDoEvento" class="form-control" placeholder="Digite o nome do evento">
+        </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <input type="text" class="form-control" name="descrição" placeholder="Digite a descrição do evento">
+        </div>
+        <div class="form-group">
+            <label>Valor</label>
+            <input type="text" class="form-control" name="Valor" placeholder="Digite o valor do evento" />
+
+            @*<input class="currencyinput">R$<input type="text" name="currency" placeholder="Digite o valor" />*@
+        </div>
+        <div class="form-group">
+            <label>Idade Mínima</label>
+            <input type="text" class="form-control" placeholder="Digite a idade minima">
+        </div>
+        <div>
+            <p>Necessário apresentar documento</p>
+            <input type="radio" name="documento" value="sim"
+                   checked>
+            <label for="documento">Sim</label>
+        </div>
+        <div>
+            <input type="radio" name="documento" value="não"
+                   checked>
+            <label for="documento">Não</label>
+        </div>
+        <div>
+            <center><h4 class="container-black">Data do Evento</h4></center>
+            <label>Data de inicio</label>
+            <input type="datetime-local" name="dataInicio" class="form-control">
+        </div>
+        <br />
+        <div>
+            <label>Data de Término</label>
+            <input type="datetime-local" name="dataTermino" class="form-control">
+        </div>
+        <br />
+        <center><h4 class="container-black">Endereço</h4></center>
+        <br />
+        <div class="flex-content">
+            <div>
+                <label>Rua</label>
+                <input id="widhei" type="text" name="rua" class="form-control" placeholder="Digite a rua">
+            </div>
+            <br />
+            <div>
+                <label>Bairro</label>
+                <input id="widhei" type="text" name="bairro" class="form-control" placeholder="Digite a rua">
+            </div>
+            <br />
+            <div>
+                <label>Número</label>
+                <input width="300" type="text" name="bairro" class="form-control">
+
+            </div>
+        </div>
+        <br />
+        <div class="flex-content">
+            <div>
+                <label>Cidade</label>
+                <input id="widhei" type="text" name="rua" class="form-control" placeholder="Digite a cidade">
+            </div>
+            <div>
+                <label>Estado</label>
+                <input id="widhei" type="text" name="rua" class="form-control" placeholder="Digite a estado">
+            </div>
+        </div>
+        <br />
+        <div>
+            <label>Complemento</label>
+            <input type="text" name="rua" class="form-control" placeholder="Digite o complemento">
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+        </div>
+    </form>
+
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+
+</body>
+
+</html>

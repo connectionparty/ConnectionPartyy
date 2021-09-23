@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAcessObject.Migrations
 {
     [DbContext(typeof(ConnectionPartyDBContext))]
-    [Migration("20210921165125_2109")]
-    partial class _2109
+    [Migration("20210923194707_2309")]
+    partial class _2309
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,12 @@ namespace DataAcessObject.Migrations
                         .HasMaxLength(100)
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<TimeSpan>("HoraFim")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HoraInicio")
+                        .HasColumnType("time");
 
                     b.Property<int>("IdadeMinima")
                         .HasColumnType("int");

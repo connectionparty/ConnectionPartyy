@@ -9,10 +9,12 @@ namespace Domains
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public DateTime DataInicio { get; set; }
+        public TimeSpan HoraInicio { get; set; }
         public DateTime DataFim{ get; set; }
+        public TimeSpan HoraFim { get; set; }
         public double? Valor { get; set; }
         public int IdadeMinima { get; set; }
-        public bool PrecisaApresentaDocumento { get; set; }
+        public bool PrecisaApresentarDocumento { get; set; }
         public string Endereco { get; set; }
         public Usuario Organizador { get; set; }
         public int UsuarioID { get; set; }
