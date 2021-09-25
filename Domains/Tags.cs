@@ -7,6 +7,6 @@ namespace Domains
     {
         public int ID { get; set; }
         public string Nome{ get; set; }
-        public ICollection<Domains.Evento> Eventos { get; set; }
+        public ICollection<Evento> Eventos { get; set; }
     }
 }

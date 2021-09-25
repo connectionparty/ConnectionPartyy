@@ -40,9 +40,9 @@ namespace DataAcessObject.Migrations
 
                     b.Property<string>("Texto")
                         .IsRequired()
-                        .HasMaxLength(140)
+                        .HasMaxLength(240)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(140)");
+                        .HasColumnType("varchar(240)");
 
                     b.Property<int>("UsuarioID")
                         .HasColumnType("int");
@@ -65,6 +65,17 @@ namespace DataAcessObject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<string>("Complemento")
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)");
+
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
@@ -82,12 +93,6 @@ namespace DataAcessObject.Migrations
 
                     b.Property<bool>("EhPublico")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Endereco")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
 
                     b.Property<TimeSpan>("HoraFim")
                         .HasColumnType("time");
@@ -107,11 +112,23 @@ namespace DataAcessObject.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(70)");
 
-                    b.Property<bool>("PrecisaApresentaDocumento")
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<bool>("PrecisaDocumento")
                         .HasColumnType("bit");
 
                     b.Property<int>("QtdMaximaPessoas")
                         .HasColumnType("int");
+
+                    b.Property<string>("Rua")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)");
 
                     b.Property<int>("UsuarioID")
                         .HasColumnType("int");
@@ -154,12 +171,21 @@ namespace DataAcessObject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DataCadastro")
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasMaxLength(40)
                         .IsUnicode(false)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<string>("Complemento")
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
-                        .IsUnicode(false)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -169,7 +195,6 @@ namespace DataAcessObject.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<int>("Genero")
-                        .IsUnicode(false)
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -177,6 +202,18 @@ namespace DataAcessObject.Migrations
                         .HasMaxLength(70)
                         .IsUnicode(false)
                         .HasColumnType("varchar(70)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<string>("Rua")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
@@ -191,7 +228,10 @@ namespace DataAcessObject.Migrations
                         .HasColumnType("varchar(15)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("ID");
 
@@ -199,6 +239,9 @@ namespace DataAcessObject.Migrations
                         .IsUnique();
 
                     b.HasIndex("Telefone")
+                        .IsUnique();
+
+                    b.HasIndex("UserName")
                         .IsUnique();
 
                     b.ToTable("Usuarios");

@@ -34,6 +34,7 @@ namespace MVCPresentationLayer
                  config.AccessDeniedPath = "/Usuario/SemPermissao";
              });
             services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IEventoService, EventoService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddHttpContextAccessor();
             services.AddMvc();

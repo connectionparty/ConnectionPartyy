@@ -13,6 +13,7 @@ namespace Service.Interfaces
         Task<Response> Cadastrar(Usuario u);
         Task<DataResponse<Usuario>> LerUsuarios();
         Task<SingleResponse<Usuario>> GetByID(int id);
+        Task<SingleResponse<Usuario>> GetByEmail(string email);
         Task<Response> Update(Usuario u);
         Task<SingleResponse<Usuario>> Authenticate(string email, string senha);
     }

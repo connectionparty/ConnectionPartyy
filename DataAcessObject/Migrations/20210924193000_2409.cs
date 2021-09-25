@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAcessObject.Migrations
 {
-    public partial class _2309 : Migration
+    public partial class _2409 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,13 +27,17 @@ namespace DataAcessObject.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(70)", unicode: false, maxLength: 70, nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     Telefone = table.Column<string>(type: "varchar(15)", unicode: false, maxLength: 15, nullable: false),
                     Senha = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "datetime2", unicode: false, nullable: false),
-                    Genero = table.Column<int>(type: "int", unicode: false, nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", unicode: false, nullable: false)
+                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Genero = table.Column<int>(type: "int", nullable: false),
+                    Bairro = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false),
+                    Rua = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: false),
+                    Numero = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
+                    Complemento = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,8 +58,11 @@ namespace DataAcessObject.Migrations
                     HoraFim = table.Column<TimeSpan>(type: "time", nullable: false),
                     Valor = table.Column<double>(type: "float", nullable: true),
                     IdadeMinima = table.Column<int>(type: "int", nullable: false),
-                    PrecisaApresentaDocumento = table.Column<bool>(type: "bit", nullable: false),
-                    Endereco = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    PrecisaDocumento = table.Column<bool>(type: "bit", nullable: false),
+                    Bairro = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false),
+                    Rua = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: false),
+                    Numero = table.Column<string>(type: "varchar(5)", unicode: false, maxLength: 5, nullable: false),
+                    Complemento = table.Column<string>(type: "varchar(60)", unicode: false, maxLength: 60, nullable: true),
                     UsuarioID = table.Column<int>(type: "int", nullable: false),
                     EhPublico = table.Column<bool>(type: "bit", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
@@ -80,7 +87,7 @@ namespace DataAcessObject.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioID = table.Column<int>(type: "int", nullable: false),
-                    Texto = table.Column<string>(type: "varchar(140)", unicode: false, maxLength: 140, nullable: false),
+                    Texto = table.Column<string>(type: "varchar(240)", unicode: false, maxLength: 240, nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     Dislikes = table.Column<int>(type: "int", nullable: false),
                     ComentarioID = table.Column<int>(type: "int", nullable: true),
@@ -200,6 +207,12 @@ namespace DataAcessObject.Migrations
                 name: "IX_Usuarios_Telefone",
                 table: "Usuarios",
                 column: "Telefone",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_UserName",
+                table: "Usuarios",
+                column: "UserName",
                 unique: true);
         }
 

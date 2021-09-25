@@ -48,7 +48,7 @@ namespace MVCPresentationLayer.Controllers
             { 
                 List<Claim> claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, resposta.Item.Email),
+                    new Claim(ClaimTypes.Name, resposta.Item.UserName),
                     new Claim(ClaimTypes.Role, "User"),
                     new Claim(ClaimTypes.NameIdentifier, resposta.Item.ID.ToString()),
                 };

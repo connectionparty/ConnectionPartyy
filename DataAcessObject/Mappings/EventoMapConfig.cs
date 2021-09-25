@@ -18,11 +18,17 @@ namespace DataAcessObject.Mappings
             builder.Property(c => c.Descricao).IsUnicode(false).HasMaxLength(300).IsRequired();
 
             builder.Property(c => c.DataInicio).IsRequired();
+            builder.Property(c => c.HoraInicio).IsRequired();
             builder.Property(c => c.DataFim).IsRequired();
+            builder.Property(c => c.HoraFim).IsRequired();
 
             builder.Property(c => c.IdadeMinima).IsRequired();
+            builder.Property(c => c.PrecisaDocumento).IsRequired();
 
-            builder.Property(c => c.Endereco).IsUnicode(false).HasMaxLength(100).IsRequired();
+            builder.Property(c => c.Bairro).IsUnicode(false).HasMaxLength(40).IsRequired();
+            builder.Property(c => c.Rua).IsUnicode(false).HasMaxLength(60).IsRequired();
+            builder.Property(c => c.Numero).IsUnicode(false).HasMaxLength(5).IsRequired();
+            builder.Property(c => c.Complemento).IsUnicode(false).HasMaxLength(60);
 
             builder.Property(c => c.Likes).IsRequired();
             builder.Property(c => c.Dislikes).IsRequired();

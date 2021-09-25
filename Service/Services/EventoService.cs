@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    class EventoService : IEventoService
+    public class EventoService : IEventoService
     {
         public async Task<Response> Cadastrar(Evento e)
         {

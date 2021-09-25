@@ -16,12 +16,12 @@ namespace DataAcessObject.Mappings
             //builder.HasMany(c => c.Resposta).WithOne(c => c.).OnDelete(DeleteBehavior.Cascade);
 
 
-            builder.Property(c => c.Texto).IsUnicode(false).HasMaxLength(140).IsRequired();
+            builder.Property(c => c.Texto).IsUnicode(false).HasMaxLength(240).IsRequired();
 
             builder.Property(c => c.Likes).IsRequired();
             builder.Property(c => c.Dislikes).IsRequired();
 
-
+            builder.HasOne(c => c.Evento).WithMany(c => c.Comentarios);
         }
     }
 }

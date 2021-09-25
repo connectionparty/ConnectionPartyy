@@ -16,12 +16,14 @@ namespace MVCPresentationLayer.Controllers
     public class EventoController : Controller
     {
         private readonly IEventoService _eventoService;
+        private readonly IUsuarioService _usuarioService;
         private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
 
-        public EventoController(IEventoService eventoService, IMapper mapper, IHostingEnvironment appEnvironment)
+        public EventoController(IEventoService eventoService, IUsuarioService usuarioService, IMapper mapper, IHostingEnvironment appEnvironment)
         {
             this._eventoService = eventoService;
+            this._usuarioService = usuarioService;
             this._mapper = mapper;
             this._appEnvironment = appEnvironment;
         }
@@ -38,12 +40,21 @@ namespace MVCPresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(EventoInsertViewModel viewModel)
         {
+            Evento evento = _mapper.Map<Evento>(viewModel);
+
+            int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id);
+
+            if (responseUsuario.Success)
+            {
+                evento.UsuarioID = responseUsuario.Item.ID;
+            }
+
             if (viewModel.Arquivo == null || viewModel.Arquivo.Length == 0 || !FileHelper.IsValidExtension(viewModel.Arquivo.FileName))
             {
                 ViewBag.Error = "Insira pelo menos uma imagem. Extensões aceitas: .jpg, .gif, .jpeg ou .png.";
                 return View();
             }
-            Evento evento = _mapper.Map<Evento>(viewModel);
 
             Response response = await _eventoService.Cadastrar(evento);
             if (!response.Success)
@@ -54,8 +65,8 @@ namespace MVCPresentationLayer.Controllers
 
             //< obtém o caminho físico da pasta wwwroot >
             string caminho_WebRoot = _appEnvironment.WebRootPath;
-            string id = evento.ID.ToString();
-            string fullFileName = caminho_WebRoot + FileHelper.EVENTO_DIRECTORY + id;
+            string idEvento = evento.ID.ToString();
+            string fullFileName = caminho_WebRoot + FileHelper.EVENTO_DIRECTORY + idEvento;
 
             Directory.CreateDirectory(fullFileName);
 
@@ -70,8 +81,5 @@ namespace MVCPresentationLayer.Controllers
         {
             return View();
         }
-
-
-        
     }
 }

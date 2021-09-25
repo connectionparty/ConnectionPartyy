@@ -30,7 +30,10 @@ namespace DataAcessObject.Mappings
 
             builder.Property(c => c.Genero).IsRequired();
 
-            builder.Property(c => c.Endereco).IsUnicode(false).HasMaxLength(100).IsRequired();
+            builder.Property(c => c.Bairro).IsUnicode(false).HasMaxLength(40).IsRequired();
+            builder.Property(c => c.Rua).IsUnicode(false).HasMaxLength(60).IsRequired();
+            builder.Property(c => c.Numero).IsUnicode(false).HasMaxLength(5).IsRequired();
+            builder.Property(c => c.Complemento).IsUnicode(false).HasMaxLength(60);
 
             builder.Property(c => c.DataCadastro).IsRequired();
 

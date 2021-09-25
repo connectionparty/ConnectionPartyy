@@ -14,8 +14,11 @@ namespace Domains
         public TimeSpan HoraFim { get; set; }
         public double? Valor { get; set; }
         public int IdadeMinima { get; set; }
-        public bool PrecisaApresentarDocumento { get; set; }
-        public string Endereco { get; set; }
+        public bool PrecisaDocumento { get; set; }
+        public string Bairro { get; set; }
+        public string Rua { get; set; }
+        public string Numero { get; set; }
+        public string? Complemento { get; set; }
         public Usuario Organizador { get; set; }
         public int UsuarioID { get; set; }
         public bool EhPublico { get; set; }

@@ -31,7 +31,7 @@ namespace Service
                             Success = false
                         };
                     }
-                    return new SingleResponse<Usuario>()
+                    return new SingleResponse<Usuario>() 
                     {
                         Mensagem = "Usuário encontrado!",
                         Success = true,
@@ -95,6 +95,7 @@ namespace Service
             }
         }
 
+        
 
         public async Task<SingleResponse<Usuario>> GetByID(int id)
         {
@@ -120,6 +121,33 @@ namespace Service
             {
                 response.Success = false;
                 response.Mensagem = "Erro no banco de dados, contate o adm.";
+            }
+            return response;
+        }
+        public async Task<SingleResponse<Usuario>> GetByEmail(string email)
+        {
+            SingleResponse<Usuario> response = new SingleResponse<Usuario>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Usuario usuario = await db.Usuarios.FindAsync(email);
+                    if (usuario == null)
+                    {
+                        response.Success = false;
+                        response.Mensagem = "Usuário não encontrado";
+                        response.Item = usuario;
+                    }
+                    response.Success = true;
+                    response.Mensagem = "Usuário encontrado com sucesso";
+                    response.Item = usuario;
+                }
+            }
+            catch (Exception)
+            {
+                response.Success = false;
+                response.Mensagem = "Erro no banco de dados. Contate o administrador.";
             }
             return response;
         }
