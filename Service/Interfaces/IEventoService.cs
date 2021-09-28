@@ -12,7 +12,7 @@ namespace Service.Interfaces
     {
         Task<Response> Cadastrar(Evento e);
         Task<DataResponse<Evento>> LerEventos();
-        Task<SingleResponse<Usuario>> GetByID(int id);
+        Task<SingleResponse<Evento>> GetByID(int id);
         Task<Response> Update(Evento e);
     }
 }

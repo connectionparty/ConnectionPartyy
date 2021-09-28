@@ -46,19 +46,95 @@ namespace Service
             }
         }
 
-        public Task<SingleResponse<Usuario>> GetByID(int id)
+        public async Task<SingleResponse<Evento>> GetByID(int id)
         {
-            throw new NotImplementedException();
+            SingleResponse<Evento> eventoResponse = new SingleResponse<Evento>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Evento evento = await db.Eventos.FindAsync(id);
+                    if (evento == null)
+                    {
+                        eventoResponse.Success = false;
+                        eventoResponse.Mensagem = "Evento não encontrado";
+                        return eventoResponse;
+                    }
+                    eventoResponse.Success = false;
+                    eventoResponse.Mensagem = "Evento encontrado com sucesso.";
+                    eventoResponse.Item = evento;
+                }
+            }
+            catch (Exception)
+            {
+                eventoResponse.Success = false;
+                eventoResponse.Mensagem = "Erro no banco de dados. Contate o administrador.";
+            }
+            return eventoResponse;
         }
 
-        public Task<DataResponse<Evento>> LerEventos()
+        public async Task<DataResponse<Evento>> LerEventos()
         {
-            throw new NotImplementedException();
+            DataResponse<Evento> eventoResponse = new DataResponse<Evento>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    List<Evento> eventos = await db.Eventos.OrderBy(c => c.ID).ToListAsync();
+                    eventoResponse.Success = true;
+                    eventoResponse.Data = eventos;
+                    eventoResponse.Mensagem = "Eventos encontrados com sucesso.";
+                }
+            }
+            catch (Exception ex)
+            {
+                eventoResponse.Success = false;
+                eventoResponse.Mensagem = "Erro no banco de dados, contate o administrador.";
+            }
+            return eventoResponse;
         }
 
-        public Task<Response> Update(Evento e)
+        public async Task<Response> Update(Evento e)
         {
-            throw new NotImplementedException();
+            EventoValidator validation = new EventoValidator();
+            ValidationResult result = validation.Validate(g);
+
+            Response r = result.ToResponse();
+            if (!r.Success)
+            {
+                return r;
+            }
+
+            try
+            {
+
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    //Tecnica 1
+                    //db.Entry<Genero>(g).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    //db.SaveChanges();
+
+                    //Tecnica 2
+                    Evento eventoExistente = await db.Eventos.FirstOrDefaultAsync(gen => gen.ID == e.ID);
+
+                    Evento eventoBanco = await db.Eventos.FindAsync(e.ID);
+                    eventoBanco.ID = e.ID;
+                    await db.SaveChangesAsync();
+                    return new Response()
+                    {
+                        Success = true,
+                        Mensagem = "Evento editado com sucesso."
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Success = false;
+                r.Mensagem = "Erro no banco de dados, contate o adm.";
+                return r;
+            }
         }
     }
 }
