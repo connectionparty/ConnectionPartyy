@@ -109,7 +109,6 @@ namespace Service
 
             try
             {
-
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
                     //Tecnica 1
@@ -131,9 +130,7 @@ namespace Service
             }
             catch (Exception ex)
             {
-                r.Success = false;
-                r.Mensagem = "Erro no banco de dados, contate o adm.";
-                return r;
+                return ResponseFactory.ResponseDBError();
             }
         }
     }

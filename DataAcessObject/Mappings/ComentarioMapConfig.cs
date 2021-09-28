@@ -13,8 +13,6 @@ namespace DataAcessObject.Mappings
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Comentario> builder)
         {
             builder.HasOne(c => c.Usuario).WithMany(c => c.Comentarios).OnDelete(DeleteBehavior.NoAction);
-            //builder.HasMany(c => c.Resposta).WithOne(c => c.).OnDelete(DeleteBehavior.Cascade);
-
 
             builder.Property(c => c.Texto).IsUnicode(false).HasMaxLength(240).IsRequired();
 

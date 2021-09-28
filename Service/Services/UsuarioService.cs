@@ -174,9 +174,42 @@ namespace Service
             return response;
         }
 
-        public Task<Response> Update(Usuario u)
+        public async Task<Response> Update(Usuario u)
         {
-            throw new NotImplementedException();
+            UsuarioValidator validation = new UsuarioValidator();
+            ValidationResult result = validation.Validate(g);
+
+            Response r = result.ToResponse();
+            if (!r.Success)
+            {
+                return r;
+            }
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    //Tecnica 1
+                    //db.Entry<Genero>(g).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    //db.SaveChanges();
+
+                    //Tecnica 2
+                    Usuario usuarioExistente = await db.Usuarios.FirstOrDefaultAsync(gen => gen.ID == u.ID);
+
+                    Usuario usuarioBanco = await db.Usuarios.FindAsync(u.ID);
+                    usuarioBanco.ID = u.ID;
+                    await db.SaveChangesAsync();
+                    return new Response()
+                    {
+                        Success = true,
+                        Mensagem = "Usuário editado com sucesso."
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return ResponseFactory.ResponseDBError(); 
+            }
         }
     }
 }
