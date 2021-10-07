@@ -16,6 +16,7 @@ namespace DataAcessObject.Mappings
             builder.Property(c => c.Nome).IsUnicode(false).HasMaxLength(20).IsRequired();
             builder.HasIndex(c => c.Nome).IsUnique();
 
+            builder.HasMany(c => c.Usuarios).WithMany(c => c.Tags);
             builder.HasMany(c => c.Eventos).WithMany(c => c.Tags);
         }
     }

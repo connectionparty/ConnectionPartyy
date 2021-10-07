@@ -18,7 +18,7 @@ namespace Service.Services
         public async Task<Response> Comentar(Comentario comentario)
         {
             ComentarioValidator validation = new ComentarioValidator();
-            ValidationResult result = validation.Validate(c);
+            ValidationResult result = validation.Validate(comentario);
 
             Response r = result.ToResponse();
             if (!r.Success)
@@ -51,15 +51,22 @@ namespace Service.Services
         {
             Response response = new Response();
 
-            using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+            try
             {
-                db.Comentarios.Remove(comentario);
-                await db.SaveChangesAsync();
-                response.Success = true;
-                response.Mensagem = "Comentário excluído com sucesso.";
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    db.Comentarios.Remove(comentario);
+                    await db.SaveChangesAsync();
+                    response.Success = true;
+                    response.Mensagem = "Comentário excluído com sucesso.";
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+                return ResponseFactory.ResponseDBError();
             }
 
-            return response;
         }
 
         public Task<Response> Editar(Comentario comentario)

@@ -75,6 +75,11 @@ namespace Service
                         };
                     }
                     usuario.DataCadastro = DateTime.Now;
+                    db.Set<Usuario>().Add(usuario);
+                    foreach (Tags item in usuario.Tags)
+                    {
+                        db.Entry(item).State = EntityState.Unchanged;
+                    }
                     db.Usuarios.Add(usuario);
                     await db.SaveChangesAsync();
                     return new Response()
@@ -94,8 +99,6 @@ namespace Service
                 };
             }
         }
-
-        
 
         public async Task<SingleResponse<Usuario>> GetByID(int id)
         {
@@ -177,7 +180,7 @@ namespace Service
         public async Task<Response> Update(Usuario u)
         {
             UsuarioValidator validation = new UsuarioValidator();
-            ValidationResult result = validation.Validate(g);
+            ValidationResult result = validation.Validate(u);
 
             Response r = result.ToResponse();
             if (!r.Success)

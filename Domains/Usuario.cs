@@ -25,6 +25,7 @@ namespace Domains
         public string Numero { get; set; }
         public string? Complemento { get; set; }
         public DateTime DataCadastro { get; set; }
+        public ICollection<Tags> Tags { get; set; }
         public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<Evento> EventosParticipados{ get; set; }
         public ICollection<Evento> EventosCriados { get; set; }

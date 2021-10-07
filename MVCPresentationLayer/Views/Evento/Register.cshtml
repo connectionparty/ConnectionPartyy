@@ -1,147 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="img/logo/logo.png" rel="icon">
-    <title>ConnectionParty - Cadastro De Evento Privado</title>
-    <link href="css/ruang-admin.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
+@section Styles
+{
     <style>
-        h1.container-black{
+        h1.container-black {
             color: black;
         }
 
-        h4.container-black{
+        h4.container-black {
             color: black;
         }
-        #widhei{
+
+        #widhei {
             width: 500px;
         }
+
         div.flex-content {
             display: flex;
         }
-        label{
-            color: black;
-        }
-        p{
-            color: black;
-        }
-        
 
+        label {
+            color: black;
+            border-color: black;
+        }
+
+        input {
+            border-color: black;
+            border-width: 1px;
+        }
+
+        p {
+            color: black;
+        }
     </style>
-</head>
+}
+<!-- Fechamento da tag style -->
+<!--Fechamento da tag head-->
+<!--Abertura da tag body-->
 
-<body>
-   
 
-    <div class="text-center">
-        <h1 class="container-black">CADASTRE SEU EVENTO</h1>
+<div class="text-center">
+    <h1 class="container-black">CADASTRE SEU EVENTO</h1>
+</div>
+<br />
+<form enctype="multipart/form-data" method="post">
+
+    <br />
+    <div class="form-group">
+        <center><h4 class="container-black">Informações Gerais</h4></center>
+        <br />
+
+        <label>Nome do Evento</label>
+        <br />
+        <input style="border-color: black; color: black;" type="text" name="Nome" size="140" class="form-control" placeholder="Digite o nome do evento">
+    </div>
+    <div class="form-group">
+        <label>Descrição</label>
+        <br />
+        <input style="border-color: black; color: black;" type="text" name="Descricao" size="140" class="form-control" placeholder="Digite a descrição do evento">
+    </div>
+    <div class="flex-content">
+        <div style="margin: 2px;" class="form-group">
+            <label>Valor R$</label>
+            <br />
+            <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" name="Valor" class="form-control" placeholder="Digite o valor do evento" />
+        </div>
+        <div style="margin: 2px;" class="form-group">
+            <label>Idade Mínima</label>
+            <br />
+            <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" class="form-control" name="IdadeMinima" placeholder="Digite a idade minima">
+        </div>
+    </div>
+
+    <div>
+        <p>Necessário apresentar documento</p>
+        <input type="radio" name="PrecisaDocumento" value="sim"
+               checked>
+        <label for="documento">Sim</label>
+    </div>
+    <div>
+        <input type="radio" name="PrecisaDocumento" value="não"
+               checked>
+        <label for="documento">Não</label>
     </div>
     <br />
-    <form enctype="multipart/form-data" method="post">
-
-        <br />
-        <div class="form-group">
-            <center><h4 class="container-black">Informações Gerais</h4></center>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="Arquivo" id="customFile">
+        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
+    </div>
+    <br />
+    <br />
+    <div>
+        <center><h4 class="container-black">Data do Evento</h4></center>
+        <label>Data de inicio</label>
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataInicio" class="form-control">
+    </div>
+    <br />
+    <div>
+        <label>Data de Término</label>
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataFim" class="form-control">
+    </div>
+    <br />
+    <center><h4 class="container-black">Endereço</h4></center>
+    <div class="flex-content">
+        <div style="margin: 2px;">
+            <label>CEP</label>
             <br />
-
-            <label>Nome do Evento</label>
-            <input type="text" name="Nome" class="form-control" placeholder="Digite o nome do evento">
+            <input style="border-color: black; color: black;" name="cep" type="text" id="cep" value="" size="10" maxlength="9" class="form-control" placeholder="Digite o CEP" />
         </div>
-        <div class="form-group">
-            <label>Descrição</label>
-            <input type="text" class="form-control" name="Descricao" placeholder="Digite a descrição do evento">
-        </div>
-        <div class="form-group">
-            <label>Valor</label>
-            <input type="text" class="form-control" name="Valor" placeholder="Digite o valor do evento" />
-        </div>
-        <div class="form-group">
-            <label>Idade Mínima</label>
-            <input type="text" class="form-control" name="IdadeMinima" placeholder="Digite a idade minima">
-        </div>
-        <div>
-            <p>Necessário apresentar documento</p>
-            <input type="radio" name="PrecisaDocumento" value="sim"
-                   checked>
-            <label for="documento">Sim</label>
-        </div>
-        <div>
-            <input type="radio" name="PrecisaDocumento" value="não"
-                   checked>
-            <label for="documento">Não</label>
-        </div>
-        <br />
-        <div class="custom-file">
-            <input type="file" name="Arquivo" class="custom-file-input" id="customFile">
-            <label class="custom-file-label" for="customFile">Choose file</label>
-        </div>
-        <br />
-        <br />
-        <input type="text" class="form-control" value="dd/mm/yyyy" name="DataInicio" id="simpleDataInput">
-        <br />
-        <input type="text" class="form-control" value="12:30" name="HoraInicio">
-        <br />
-        <input type="text" class="form-control" value="dd/mm/yyyy" name="DataFim" id="simpleDataInput">
-        <br />
-        <input type="text" class="form-control" value="12:30" name="HoraFim">
-        <br />
-        <center><h4 class="container-black">Endereço</h4></center>
-        <br />
-        <div class="flex-content">
-            <div>
-                <label>Rua</label>
-                <input id="widhei" type="text" name="Rua" class="form-control" placeholder="Digite a rua">
-            </div>
+        <div style="margin: 2px;">
+            <label>Rua</label>
             <br />
-            <div>
-                <label>Bairro</label>
-                <input id="widhei" type="text" name="Bairro" class="form-control" placeholder="Digite a rua">
-            </div>
+            <input style="border-color: black; color: black;" name="Rua" type="text" id="rua" size="60" class="form-control" placeholder="Digite a rua" />
+        </div>
+        <div style="margin: 2px;">
+            <label>Bairro</label>
             <br />
-            <div>
-                <label>Número</label>
-                <input width="300" type="text" name="Numero" class="form-control">
+            <input style="border-color: black; color: black;" name="Bairro" type="text" id="bairro" size="65" class="form-control" placeholder="Digite o bairro" />
+        </div>
+    </div>
+    <div>
 
-            </div>
-        </div>
-        <br />
-        <!--<div class="flex-content">
-        <div>
-            <label>Cidade</label>
-            <input id="widhei" type="text" name="rua" class="form-control" placeholder="Digite a cidade">
-        </div>
-        <div>
-            <label>Estado</label>
-            <input id="widhei" type="text" name="rua" class="form-control" placeholder="Digite a estado">
-        </div>
-    </div>-->
-        <!--<br />-->
-        <div>
+    </div>
+    <div class="flex-content">
+        <div style="margin: 2px; border-color: black;">
             <label>Complemento</label>
-            <input type="text" name="Complemento" class="form-control" placeholder="Digite o complemento">
+            <br />
+            <input style="border-color: black; color: black;" name="Complemento" type="text" size="50" class="form-control" placeholder="Digite o complemento" />
         </div>
-
-        <hr />
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+        <div style="margin: 2px; border-color: black;">
+            <label>Número</label>
+            <br />
+            <input style="border-color: black; color: black;" name="Numero" type="text" size="15" class="form-control" placeholder="Digite o número" />
         </div>
-    </form>
+        <div style="margin: 2px;">
+            <label>Cidade</label>
+            <br />
+            <input style="border-color: black; color: black;" name="cidade" type="text" id="cidade" size="50" class="form-control" placeholder="Digite a cidade" />
+        </div>
+        <div style="margin: 2px;">
+            <label>Estado</label>
+            <br />
+            <input style="border-color: black; color: black;" name="uf" type="text" id="uf" size="2" class="form-control" placeholder="UF" />
+        </div>
+    </div>
 
 
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/ruang-admin.min.js"></script>
 
-</body>
 
-</html>
+    <div>
+        <center><h4 class="container-black">Tags</h4></center>
+        <label>Selecione as tags para o evento</label>
+        <select class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
+            @foreach (Domains.Tags t in ViewBag.Tags)
+            {
+                <option value="@t.ID">@t.Nome</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <center><h4 class="container-black">Tags</h4></center>
+        <label>Selecione os usuários convidados para o evento</label>
+        <select class="select2-multiple form-control" multiple="multiple" name="Participantes" id="Participantes">
+            @foreach (Domains.Usuario u in ViewBag.Usuarios)
+            {
+                <option value="@u.ID">@u.UserName</option>
+            }
+        </select>
+    </div>
+
+
+    <hr />
+
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+    </div>
+
+</form>
+
+<!-- Tags Script -->
+@section Scripts{
+    <script defer>
+        $('#Tags').select2();
+    </script>
+    <script defer>
+        $('#Participantes').select2();
+    </script>
+    <script src="~/js/viacep.js"></script>
+
+}
+<!-- Tags Script -->

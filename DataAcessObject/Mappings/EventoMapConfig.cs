@@ -17,10 +17,8 @@ namespace DataAcessObject.Mappings
 
             builder.Property(c => c.Descricao).IsUnicode(false).HasMaxLength(300).IsRequired();
 
-            builder.Property(c => c.DataInicio).IsRequired();
-            builder.Property(c => c.HoraInicio).IsRequired();
-            builder.Property(c => c.DataFim).IsRequired();
-            builder.Property(c => c.HoraFim).IsRequired();
+            builder.Property(c => c.DataHoraInicio).IsRequired();
+            builder.Property(c => c.DataHoraFim).IsRequired();
 
             builder.Property(c => c.IdadeMinima).IsRequired();
             builder.Property(c => c.PrecisaDocumento).IsRequired();

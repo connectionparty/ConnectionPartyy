@@ -24,11 +24,13 @@ namespace MVCPresentationLayer.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
-        public UsuarioController(IUsuarioService usuarioService, IMapper mapper, IHostingEnvironment appEnvironment)
+        private readonly ITagService _tagService;
+        public UsuarioController(IUsuarioService usuarioService, IMapper mapper, IHostingEnvironment appEnvironment, ITagService tagService)
         {
             this._usuarioService = usuarioService;
             this._mapper = mapper;
             this._appEnvironment = appEnvironment;
+            this._tagService = tagService;
         }
 
         public IActionResult Index()
@@ -78,11 +80,16 @@ namespace MVCPresentationLayer.Controllers
             ViewBag.FileName = fileName;
             return View();
         }
-
+        public IActionResult CadastroDeEventoPrivado()
+        {
+            return View();
+        }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            DataResponse<Tags> tags = await this._tagService.GetAll();
+            ViewBag.Tags = tags.Data;
             return View();
         }
         [HttpPost]
@@ -96,6 +103,17 @@ namespace MVCPresentationLayer.Controllers
 
             //AutoMapper
             Usuario usuario = _mapper.Map<Usuario>(viewModel);
+
+            string[] tags = this.Request.Form["Tags"].ToString().Split(',');
+
+            usuario.Tags = new List<Tags>();
+            foreach (var item in tags)
+            {
+                usuario.Tags.Add(new Tags()
+                {
+                    ID = int.Parse(item)
+                });
+            }
 
             Response response = await _usuarioService.Cadastrar(usuario);
             if (!response.Success)

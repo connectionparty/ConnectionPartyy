@@ -8,10 +8,8 @@ namespace Domains
         public int ID { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataInicio { get; set; }
-        public TimeSpan HoraInicio { get; set; }
-        public DateTime DataFim{ get; set; }
-        public TimeSpan HoraFim { get; set; }
+        public DateTime DataHoraInicio { get; set; }
+        public DateTime DataHoraFim { get; set; }
         public double? Valor { get; set; }
         public int IdadeMinima { get; set; }
         public bool PrecisaDocumento { get; set; }

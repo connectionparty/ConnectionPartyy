@@ -31,7 +31,17 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-                    db.Eventos.Add(e);
+                    db.Set<Evento>().Add(e);
+                    foreach (Tags item in e.Tags)
+                    {
+                        db.Entry(item).State = EntityState.Unchanged;
+                    }
+
+                    db.Set<Evento>().Add(e);
+                    foreach (Usuario item in e.Participantes)
+                    {
+                        db.Entry(item).State = EntityState.Unchanged;
+                    }
                     await db.SaveChangesAsync();
                     return new Response()
                     {
@@ -40,7 +50,7 @@ namespace Service
                     };
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return ResponseFactory.ResponseDBError();
             }
@@ -99,7 +109,7 @@ namespace Service
         public async Task<Response> Update(Evento e)
         {
             EventoValidator validation = new EventoValidator();
-            ValidationResult result = validation.Validate(g);
+            ValidationResult result = validation.Validate(e);
 
             Response r = result.ToResponse();
             if (!r.Success)

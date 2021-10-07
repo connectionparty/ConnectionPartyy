@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Service;
 using Service.Interfaces;
+using Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,9 @@ namespace MVCPresentationLayer
              });
             services.AddTransient<IUsuarioService, UsuarioService>();
             services.AddTransient<IEventoService, EventoService>();
+            services.AddTransient<ITagService, TagService>();
+
+            
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddHttpContextAccessor();
             services.AddMvc();

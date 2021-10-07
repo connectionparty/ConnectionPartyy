@@ -37,6 +37,8 @@ namespace DataAcessObject.Mappings
 
             builder.Property(c => c.DataCadastro).IsRequired();
 
+            builder.HasMany(c => c.Tags).WithMany(c => c.Usuarios);
+
             builder.HasMany(c => c.EventosCriados).WithOne(c => c.Organizador);
             builder.HasMany(c => c.EventosParticipados).WithMany(c => c.Participantes).UsingEntity<Dictionary<string, object>>("EventoUsuario",
               j => j.HasOne<Evento>().WithMany().HasForeignKey("EventoID").HasConstraintName("FK_EventoUsuario_EventoID").OnDelete(DeleteBehavior.NoAction),

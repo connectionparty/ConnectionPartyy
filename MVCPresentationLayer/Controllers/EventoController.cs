@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domains;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MVCPresentationLayer.Models;
@@ -19,24 +20,34 @@ namespace MVCPresentationLayer.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly ITagService _tagService;
 
-        public EventoController(IEventoService eventoService, IUsuarioService usuarioService, IMapper mapper, IHostingEnvironment appEnvironment)
+
+        public EventoController(IEventoService eventoService, ITagService tagService, IUsuarioService usuarioService, IMapper mapper, IHostingEnvironment appEnvironment)
         {
             this._eventoService = eventoService;
             this._usuarioService = usuarioService;
             this._mapper = mapper;
             this._appEnvironment = appEnvironment;
+            this._tagService = tagService;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            DataResponse<Tags> tags = await this._tagService.GetAll();
+            ViewBag.Tags = tags.Data;
+
+            DataResponse<Usuario> usuarios = await this._usuarioService.LerUsuarios();
+            ViewBag.Usuarios = usuarios.Data;
+
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Register(EventoInsertViewModel viewModel)
         {
@@ -44,6 +55,12 @@ namespace MVCPresentationLayer.Controllers
 
             int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
             SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id);
+
+
+            string[] tags = this.Request.Form["Tags"].ToString().Split(',');
+
+            string[] usuarios = this.Request.Form["Participantes"].ToString().Split(',');
+
 
             if (responseUsuario.Success)
             {
@@ -56,6 +73,23 @@ namespace MVCPresentationLayer.Controllers
                 return View();
             }
 
+            evento.Participantes = new List<Usuario>();
+            foreach (var item in usuarios)
+            {
+                evento.Participantes.Add(new Usuario()
+                {
+                    ID = int.Parse(item)
+                });
+            }
+
+            evento.Tags = new List<Tags>();
+            foreach (var item in tags)
+            {
+                evento.Tags.Add(new Tags()
+                {
+                    ID = int.Parse(item)
+                });
+            }
             Response response = await _eventoService.Cadastrar(evento);
             if (!response.Success)
             {

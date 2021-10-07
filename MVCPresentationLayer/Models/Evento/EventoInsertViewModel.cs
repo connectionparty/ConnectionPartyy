@@ -24,6 +24,7 @@ namespace MVCPresentationLayer.Models
         public string Complemento { get; set; }
         public int QtdMaximaPessoas { get; set; }
         public ICollection<Tags> Tags { get; set; }
+        public ICollection<Domains.Usuario> Participantes { get; set; }
         public IFormFile Arquivo { get; set; } 
     }
 }

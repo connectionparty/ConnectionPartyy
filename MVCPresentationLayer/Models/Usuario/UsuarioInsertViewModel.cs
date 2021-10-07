@@ -22,5 +22,6 @@ namespace MVCPresentationLayer.Models
         public string Numero { get; set; }
         public string? Complemento { get; set; }
         public IFormFile Arquivo { get; set; }
+        public ICollection<Tags> Tags { get; set; }
     }
 }

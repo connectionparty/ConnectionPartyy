@@ -93,6 +93,16 @@
                                         </div>
                                     </div>
 
+                                    <div>
+                                        <center><h4 class="container-black">Tags</h4></center>
+                                        <label>Selecione as tags para o evento</label>
+                                        <select class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
+                                            @foreach (Domains.Tags t in ViewBag.Tags)
+                                            {
+                                                <option value="@t.ID">@t.Nome</option>
+                                            }
+                                        </select>
+                                    </div>
 
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-primary btn-block" value="Registrar">
@@ -120,9 +130,11 @@
     </div>
 </div>
 
-@if (ViewBag.Errors != null)
-{
-
+@section Scripts{
+    <script defer>
+    $('#Tags').select2();
+    </script>
+    <script src="~/js/viacep.js"></script>
 }
 
 
