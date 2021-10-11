@@ -37,7 +37,8 @@ namespace MVCPresentationLayer.Controllers
         {
             return View();
         }
-        public IActionResult Login()
+
+        public async Task<IActionResult> Login()
         {
             return View();
         }
@@ -63,14 +64,8 @@ namespace MVCPresentationLayer.Controllers
             return View();
         }
 
-
-        public IActionResult Teste()
-        {
-            return View();
-        }
-
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             //C:\Users\Caio Fabeni\Desktop\ConnectionParty-d333d814a75248c92f13eae19401980be2e88c8f\MVCPresentationLayer\wwwroot\imgPessoa\5.jpg
             string id = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -78,10 +73,6 @@ namespace MVCPresentationLayer.Controllers
             //Url.Content(filePath);
             string fileName = _appEnvironment.WebRootPath + FileHelper.PESSOA_DIRECTORY + id + FileHelper.EXTENSION;
             ViewBag.FileName = fileName;
-            return View();
-        }
-        public IActionResult CadastroDeEventoPrivado()
-        {
             return View();
         }
 
@@ -92,13 +83,14 @@ namespace MVCPresentationLayer.Controllers
             ViewBag.Tags = tags.Data;
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(UsuarioInsertViewModel viewModel)
         {
             if (viewModel.Arquivo == null || viewModel.Arquivo.Length == 0 || !FileHelper.IsValidExtension(viewModel.Arquivo.FileName))
             {
                 ViewBag.Error = "Foto obrigatória. Extensões aceitas: .jpg, .gif, .jpeg ou .png.";
-                return View();
+                return await Register();
             }
 
             //AutoMapper
@@ -119,7 +111,7 @@ namespace MVCPresentationLayer.Controllers
             if (!response.Success)
             {
                 ViewBag.Error = response.Mensagem;
-                return View();
+                return await Register();
             }
 
             //< obtém o caminho físico da pasta wwwroot >
@@ -132,8 +124,7 @@ namespace MVCPresentationLayer.Controllers
                 await viewModel.Arquivo.CopyToAsync(stream);
             }
 
-            return RedirectToAction("Index");
-
+            return await Profile();
         }
     }
 }

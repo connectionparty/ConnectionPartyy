@@ -11,10 +11,8 @@ namespace MVCPresentationLayer.Models
     {
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public DateTime DataInicio { get; set; }
-        public TimeSpan HoraInicio { get; set; }
-        public DateTime DataFim { get; set; }
-        public TimeSpan HoraFim { get; set; }
+        public DateTime DataHoraInicio { get; set; }
+        public DateTime DataHoraFim { get; set; }
         public double? Valor { get; set; }
         public int IdadeMinima { get; set; }
         public bool PrecisaDocumento { get; set; }
@@ -23,8 +21,12 @@ namespace MVCPresentationLayer.Models
         public string Numero { get; set; }
         public string Complemento { get; set; }
         public int QtdMaximaPessoas { get; set; }
+        public bool EhPublico { get; set; }
         public ICollection<Tags> Tags { get; set; }
         public ICollection<Domains.Usuario> Participantes { get; set; }
-        public IFormFile Arquivo { get; set; } 
+        public IFormFile Arquivo1 { get; set; }
+        public IFormFile Arquivo2{ get; set; }
+        public IFormFile Arquivo3 { get; set; }
+
     }
 }

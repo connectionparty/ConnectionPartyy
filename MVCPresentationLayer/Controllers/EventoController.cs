@@ -31,11 +31,15 @@ namespace MVCPresentationLayer.Controllers
             this._appEnvironment = appEnvironment;
             this._tagService = tagService;
         }
-        public IActionResult Index()
+
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            DataResponse<Evento> eventos = await this._eventoService.LerEventosPreferencia(int.Parse(HttpContext.User.Claims.ToList()[2].Value));
+            return View(eventos.Data);
         }
 
+        [Authorize]
         public async Task<IActionResult> Register()
         {
             DataResponse<Tags> tags = await this._tagService.GetAll();
@@ -67,10 +71,10 @@ namespace MVCPresentationLayer.Controllers
                 evento.UsuarioID = responseUsuario.Item.ID;
             }
 
-            if (viewModel.Arquivo == null || viewModel.Arquivo.Length == 0 || !FileHelper.IsValidExtension(viewModel.Arquivo.FileName))
+            if (viewModel.Arquivo1 == null || viewModel.Arquivo1.Length == 0 || !FileHelper.IsValidExtension(viewModel.Arquivo1.FileName))
             {
                 ViewBag.Error = "Insira pelo menos uma imagem. Extensões aceitas: .jpg, .gif, .jpeg ou .png.";
-                return View();
+                return await Register();
             }
 
             evento.Participantes = new List<Usuario>();
@@ -94,7 +98,7 @@ namespace MVCPresentationLayer.Controllers
             if (!response.Success)
             {
                 ViewBag.Error = response.Mensagem;
-                return View();
+                return await Register();
             }
 
             //< obtém o caminho físico da pasta wwwroot >
@@ -106,13 +110,58 @@ namespace MVCPresentationLayer.Controllers
 
             using (FileStream stream = new FileStream(fullFileName + "\\1.jpg", FileMode.Create))
             {
-                await viewModel.Arquivo.CopyToAsync(stream);
+                await viewModel.Arquivo1.CopyToAsync(stream);
             }
-            return View();
+            using (FileStream stream = new FileStream(fullFileName + "\\2.jpg", FileMode.Create))
+            {
+                await viewModel.Arquivo2.CopyToAsync(stream);
+            }
+            using (FileStream stream = new FileStream(fullFileName + "\\3.jpg", FileMode.Create))
+            {
+                await viewModel.Arquivo3.CopyToAsync(stream);
+            }
+            return await Register();
         }
 
-        public IActionResult Detalhes(int id)
+        public async Task<IActionResult> CheckIn(int id)
         {
+            SingleResponse<Evento> responseEvento = await _eventoService.GetByID(id);
+            int idUser = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(idUser);
+
+            if (!responseUsuario.Success)
+            {
+                ViewBag.Errors = responseUsuario.Mensagem;
+                return View();
+            }
+            if (!responseEvento.Success)
+            {
+                ViewBag.Errors = responseEvento.Mensagem;
+                return View();
+            }
+            Response response = await _eventoService.CheckInUsuario(responseEvento, responseUsuario);
+            if (!response.Success)
+            {
+                ViewBag.Errors = response.Mensagem;
+                return View();
+            }
+            return await Index();
+        }
+
+        public async Task<IActionResult> EventoDetalhes(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return await this.Index();
+            }
+            SingleResponse<Evento> eventoResponse = await _eventoService.GetByID(id.Value);
+            if (!eventoResponse.Success)
+            {
+                return await this.Index();
+            }
+
+
+
             return View();
         }
     }

@@ -1,0 +1,52 @@
+﻿@model List<Domains.Evento> 
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (Domains.Evento item in Model)
+{
+
+<div class="profile-uoloaded-post border-bottom-1 pb-5">
+    <img style="width: 908px; height: 359px;" src="/img/profile/profile-party-image.png" alt="" class="img-fluid">
+    <br>
+    <br>
+    <div>
+
+    </div>
+    <a class="post-title" href="/Evento/EventoDetalhes/@item.ID">
+        <h4>@item.Nome</h4>
+    </a>
+    <p>
+        @item.Descricao
+    </p>
+    <p>
+        Inicio: @item.DataHoraInicio
+    </p>
+    <p>
+        Fim: @item.DataHoraFim
+    </p>
+    <button style="margin: 2px;" class="btn btn-primary mr-3">
+        <span class="mr-3">
+            <i class="fa fa-thumbs-up"></i>
+        </span>Like
+    </button>
+    <button style="margin: 2px;" class="btn btn-primary mr-3">
+        <span>
+            <i class="fa fa-thumbs-down"></i>
+        </span>Dislike
+    </button>
+
+    <button class="btn btn-secondary">
+        <span class="mr-3">
+            <i class="fa fa-reply"></i>
+        </span>Compartilhar
+    </button>
+    @foreach (var i in item.Tags)
+    {
+        <button style="margin: 2px;" class="btn btn-secondary">
+            <i> @i.Nome</i>
+        </button>
+    }
+
+</div>
+}

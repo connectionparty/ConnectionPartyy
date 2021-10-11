@@ -8,86 +8,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="~/img/logo/logo.png" rel="icon">
-    <title>RuangAdmin - Dashboard</title>
+    <link href="/img/logo/logo-connection-party.png" rel="icon">
+    <title>Connection Party</title>
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/ruang-admin.min.css" rel="stylesheet">
+    <link href="~/css/banner.css" rel="stylesheet" />
     <link href="~/vendor/select2/dist/css/select2.css" rel="stylesheet" />
-    @RenderSection("Styles",false)
+    @RenderSection("Styles", false)
+
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:19943/">
+                @* << TALVEZ PRECISE MODIFICAR O LINK DO LOCALHOST CASO HAJA ERROS*@
                 <div class="sidebar-brand-icon">
-                    <img src="~/img/logo/logo2.png">
+                    <img src="/img/logo/nova-logo-connection-party.png">
                 </div>
-                <div class="sidebar-brand-text mx-3">RuangAdmin</div>
+                <div style="font-size: 10pt" class="sidebar-brand-text mx-2">Connection Party</div>
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                <a class="nav-link" href="http://localhost:19943/" @* << TALVEZ PRECISE MODIFICAR O LINK DO LOCALHOST CASO HAJA ERROS*@
+                    <span>
+                        <i class="fas fa-fw fa-table"></i>
+                    </span>Página Inicial
                 </a>
             </li>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
                 Features
             </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                   aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Bootstrap UI</span>
+            @*Botão para cadastrar eventos na tela inicial*@
+            <li class="nav-item active">
+                <a class="nav-link" href="/Evento/Register">
+                    <span>
+                        <i class="fas fa-fw fa-map-marker"></i>
+                    </span>Cadastrar Evento
                 </a>
-                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Bootstrap UI</h6>
-                        <a class="collapse-item" href="alerts.html">Alerts</a>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="dropdowns.html">Dropdowns</a>
-                        <a class="collapse-item" href="modals.html">Modals</a>
-                        <a class="collapse-item" href="popovers.html">Popovers</a>
-                        <a class="collapse-item" href="progress-bar.html">Progress Bars</a>
-                    </div>
-                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
-                   aria-controls="collapseForm">
-                    <i class="fab fa-fw fa-wpforms"></i>
-                    <span>Forms</span>
-                </a>
-                <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Forms</h6>
-                        <a class="collapse-item" href="form_basics.html">Form Basics</a>
-                        <a class="collapse-item" href="form_advanceds.html">Form Advanceds</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-                   aria-controls="collapseTable">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span>
-                </a>
-                <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Tables</h6>
-                        <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-                        <a class="collapse-item" href="datatables.html">DataTables</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ui-colors.html">
-                    <i class="fas fa-fw fa-palette"></i>
-                    <span>UI Colors</span>
+            @*Botão sobre nós na tela inicial*@
+            <li class="nav-item active">
+                <a class="nav-link" href="/Usuario/SobreNos">
+                    <span>
+                        <i class="fas fa-fw fa-info"></i>
+                    </span>Sobre Nós
                 </a>
             </li>
             <hr class="sidebar-divider">
@@ -103,7 +71,7 @@
                 <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Example Pages</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="/Usuario/CadastroDeEventos">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="404.html">404 Page</a>
                         <a class="collapse-item" href="blank.html">Blank Page</a>
@@ -245,45 +213,39 @@
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
-                                    Task
+                                    Ingressos
                                 </h6>
-                                <a class="dropdown-item align-items-center" href="#">
+                                <a class="dropdown-item align-items-center" href="#" onclick="pegarNome()">
                                     <div class="mb-3">
-                                        <div class="small text-gray-500">
-                                            Design Button
-                                            <div class="small float-right"><b>50%</b></div>
-                                        </div>
-                                        <div class="progress" style="height: 12px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                                 aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
+                                        <span>
+                                            <strong>
+                                                Evento:
+                                            </strong>
+                                            <span id="ingressosEvento">
+
+                                            </span>
+                                        </span>
+                                        <br />
+                                        <span>
+                                            <strong>
+                                                Data:
+                                            </strong>
+                                            <span id="ingressosData">
+
+                                            </span>
+                                        </span>
+                                        <br />
+                                        <span>
+                                            <strong>
+                                                Horário:
+                                            </strong>
+                                            <span id="ingressosHorario">
+
+                                            </span>
+                                        </span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item align-items-center" href="#">
-                                    <div class="mb-3">
-                                        <div class="small text-gray-500">
-                                            Make Beautiful Transitions
-                                            <div class="small float-right"><b>30%</b></div>
-                                        </div>
-                                        <div class="progress" style="height: 12px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
-                                                 aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item align-items-center" href="#">
-                                    <div class="mb-3">
-                                        <div class="small text-gray-500">
-                                            Create Pie Chart
-                                            <div class="small float-right"><b>75%</b></div>
-                                        </div>
-                                        <div class="progress" style="height: 12px;">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                                 aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
+                                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Visualizar todos os ingressos</a> -->
                             </div>
                         </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -342,21 +304,11 @@
                     <div class="copyright text-center my-auto">
                         <span>
                             copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> - developed by
-                            <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
+                            <script>document.write(new Date().getFullYear());</script> - desenvolvido por Time ConnectionParty
                         </span>
                     </div>
                 </div>
 
-                <div class="container my-auto py-2">
-                    <div class="copyright text-center my-auto">
-                        <span>
-                            copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> - distributed by
-                            <b><a href="https://themewagon.com/" target="_blank">themewagon</a></b>
-                        </span>
-                    </div>
-                </div>
             </footer>
             <!-- Footer -->
         </div>
@@ -371,8 +323,17 @@
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/js/ruang-admin.min.js"></script>
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/banners.js"></script>
     <script src="~/vendor/select2/dist/js/select2.js"></script>
-    @RenderSection("Scripts",false)
+    <script>
+        function pegarNome() {
+            document.getElementById("ingressosEvento").innerHTML = evento
+            document.getElementById("ingressosData").innerHTML = data
+            document.getElementById("ingressosHorario").innerHTML = horario
+        }
+    </script>
+    @RenderSection("Scripts", false)
 
 </body>
 

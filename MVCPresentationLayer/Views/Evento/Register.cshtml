@@ -42,12 +42,10 @@
 </div>
 <br />
 <form enctype="multipart/form-data" method="post">
-
     <br />
     <div class="form-group">
         <center><h4 class="container-black">Informações Gerais</h4></center>
         <br />
-
         <label>Nome do Evento</label>
         <br />
         <input style="border-color: black; color: black;" type="text" name="Nome" size="140" class="form-control" placeholder="Digite o nome do evento">
@@ -69,21 +67,72 @@
             <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" class="form-control" name="IdadeMinima" placeholder="Digite a idade minima">
         </div>
     </div>
-
-    <div>
+    <br />
+    <div class="col-sm-9">
         <p>Necessário apresentar documento</p>
-        <input type="radio" name="PrecisaDocumento" value="sim"
-               checked>
-        <label for="documento">Sim</label>
-    </div>
-    <div>
-        <input type="radio" name="PrecisaDocumento" value="não"
-               checked>
-        <label for="documento">Não</label>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Sim</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Não</label>
+        </div>
     </div>
     <br />
+    <div class="col-sm-9">
+        <p>Tipo do Evento</p>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio2" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio3">Público</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio4">Privado</label>
+        </div>
+    </div>
+    <br />
+    <label>Quantidade máxima de pessoas</label>
+    <br />
+    <input style="border-color: black; color: black;" type="text" name="QtdMaximaPessoas" size="140" class="form-control" placeholder="Informe o número máximo de convidados">
+    <br />
+    <div>
+        <label>Selecione as tags para o evento</label>
+        <select class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
+            @foreach (Domains.Tags t in ViewBag.Tags)
+            {
+                <option value="@t.ID">@t.Nome</option>
+            }
+        </select>
+    </div>
+    <br />
+    <div style="margin: 2px;">
+        <label>Selecione os usuários convidados para o evento</label>
+        <select class="select2-multiple form-control" multiple="multiple" name="Participantes" id="Participantes">
+            @foreach (Domains.Usuario u in ViewBag.Usuarios)
+            {
+                <option value="@u.ID">@u.UserName</option>
+            }
+        </select>
+    </div>
+    <br />
+
+    <br />
+
     <div class="custom-file">
-        <input type="file" class="custom-file-input" name="Arquivo" id="customFile">
+        <input type="file" class="custom-file-input" name="Arquivo1" id="customFile">
+        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
+    </div>
+    <br />
+    <br />
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="Arquivo2" id="customFile">
+        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
+    </div>
+    <br />
+    <br />
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="Arquivo3" id="customFile">
         <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
     </div>
     <br />
@@ -91,12 +140,12 @@
     <div>
         <center><h4 class="container-black">Data do Evento</h4></center>
         <label>Data de inicio</label>
-        <input style="border-color: black; color: black;" type="datetime-local" name="DataInicio" class="form-control">
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraInicio" class="form-control">
     </div>
     <br />
     <div>
         <label>Data de Término</label>
-        <input style="border-color: black; color: black;" type="datetime-local" name="DataFim" class="form-control">
+        <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraFim" class="form-control">
     </div>
     <br />
     <center><h4 class="container-black">Endereço</h4></center>
@@ -143,35 +192,7 @@
         </div>
     </div>
 
-
-
-
-
-    <div>
-        <center><h4 class="container-black">Tags</h4></center>
-        <label>Selecione as tags para o evento</label>
-        <select class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
-            @foreach (Domains.Tags t in ViewBag.Tags)
-            {
-                <option value="@t.ID">@t.Nome</option>
-            }
-        </select>
-    </div>
-
-    <div>
-        <center><h4 class="container-black">Tags</h4></center>
-        <label>Selecione os usuários convidados para o evento</label>
-        <select class="select2-multiple form-control" multiple="multiple" name="Participantes" id="Participantes">
-            @foreach (Domains.Usuario u in ViewBag.Usuarios)
-            {
-                <option value="@u.ID">@u.UserName</option>
-            }
-        </select>
-    </div>
-
-
     <hr />
-
 
     <div class="form-group">
         <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
@@ -181,13 +202,14 @@
 
 <!-- Tags Script -->
 @section Scripts{
-    <script defer>
-        $('#Tags').select2();
-    </script>
-    <script defer>
-        $('#Participantes').select2();
-    </script>
     <script src="~/js/viacep.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('#Participantes').select2();
+            $('#Tags').select2();
+        });
+
+    </script>
 }
 <!-- Tags Script -->

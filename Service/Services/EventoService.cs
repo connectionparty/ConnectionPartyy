@@ -56,6 +56,30 @@ namespace Service
             }
         }
 
+        public async Task<Response> CheckInUsuario(SingleResponse<Evento> eventoResponse, SingleResponse<Usuario> usuarioResponse)
+        {
+            Response response = new Response();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Evento eventoBanco = await db.Eventos.FirstOrDefaultAsync(c => c.ID == eventoResponse.Item.ID);
+                    eventoBanco.Participantes = (ICollection<Usuario>)usuarioResponse.Item;
+                    await db.SaveChangesAsync();
+                    response.Success = true;
+                    response.Mensagem = "Ae porra deu certo";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Mensagem = ex.ToString();
+            }
+            return response;
+
+        }
+
         public async Task<SingleResponse<Evento>> GetByID(int id)
         {
             SingleResponse<Evento> eventoResponse = new SingleResponse<Evento>();
@@ -64,7 +88,7 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-                    Evento evento = await db.Eventos.FindAsync(id);
+                    Evento evento = await db.Eventos.Include(c => c.Tags).Include(c => c.Comentarios).Include(c => c.Organizador).Include(c => c.Participantes).FirstOrDefaultAsync(c => c.ID == id);
                     if (evento == null)
                     {
                         eventoResponse.Success = false;
@@ -104,6 +128,36 @@ namespace Service
                 eventoResponse.Mensagem = "Erro no banco de dados, contate o administrador.";
             }
             return eventoResponse;
+        }
+
+        public async Task<DataResponse<Evento>> LerEventosPreferencia(int idUser)
+        {
+            DataResponse<Evento> eventoResponse = new DataResponse<Evento>();
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    //Seleciona no banco de dados o usuário logado e trás as tags dele!
+                    Usuario usuario = await db.Usuarios.Include(c => c.Tags).ThenInclude(c=> c.Eventos).FirstOrDefaultAsync(c => c.ID == idUser);
+                    List<Tags> tags = usuario.Tags.ToList();
+                    List<Evento> eventosLinhaTempo = new List<Evento>();
+                    foreach (var tag in tags)
+                    {
+                        List<Evento> eventos = tag.Eventos.Where(c => c.DataHoraFim > DateTime.Now).ToList();
+                        eventosLinhaTempo.AddRange(eventos);
+                    }
+                    eventoResponse.Data = eventosLinhaTempo;
+                    return eventoResponse;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            return null;
         }
 
         public async Task<Response> Update(Evento e)
