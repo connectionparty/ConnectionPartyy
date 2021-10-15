@@ -14,6 +14,7 @@ namespace MVCPresentationLayer.Infrastructure
         public AutoMapperProfile()
         {
             CreateMap<UsuarioInsertViewModel, Usuario>();
+            CreateMap<UsuarioEditViewModel, Usuario>();
             CreateMap<Usuario, UsuarioQueryViewModel>();
             CreateMap<EventoInsertViewModel, Evento>();
             CreateMap<TagInstertViewModel, Tags>();

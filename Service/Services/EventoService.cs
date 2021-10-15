@@ -56,7 +56,7 @@ namespace Service
             }
         }
 
-        public async Task<Response> CheckInUsuario(SingleResponse<Evento> eventoResponse, SingleResponse<Usuario> usuarioResponse)
+        public async Task<Response> CheckInUsuario(int idEvento, int idUsuario)
         {
             Response response = new Response();
 
@@ -64,8 +64,11 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-                    Evento eventoBanco = await db.Eventos.FirstOrDefaultAsync(c => c.ID == eventoResponse.Item.ID);
-                    eventoBanco.Participantes = (ICollection<Usuario>)usuarioResponse.Item;
+                    Evento eventoBanco = await db.Eventos.Include(c => c.Participantes).FirstOrDefaultAsync(c => c.ID == idEvento);
+                    Usuario usuario = new Usuario();
+                    usuario.ID = idUsuario;
+                    eventoBanco.Participantes.Add(usuario);
+                    db.Entry(usuario).State = EntityState.Unchanged;
                     await db.SaveChangesAsync();
                     response.Success = true;
                     response.Mensagem = "Ae porra deu certo";
@@ -78,6 +81,92 @@ namespace Service
             }
             return response;
 
+        }
+
+        public async Task<Response> Comentar(Comentario c)
+        {
+            ComentarioValidator validation = new ComentarioValidator();
+            ValidationResult result = validation.Validate(c);
+
+            Response r = result.ToResponse();
+            if (!r.Success)
+            {
+                return r;
+            }
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    db.Add(c);
+                    await db.SaveChangesAsync();
+                    return new Response()
+                    {
+                        Success = true,
+                        Mensagem = "Comentário publicado com sucesso."
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                return ResponseFactory.ResponseDBError();
+            }
+        }
+
+        public async Task<Response> Curtir(int idEvento)
+        {
+            Response response = new SingleResponse<Evento>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Evento evento = await db.Eventos.FindAsync(idEvento);
+                    if (evento == null)
+                    {
+                        response.Success = false;
+                        response.Mensagem = "Evento não encontrado";
+                        return response;
+                    }
+                    evento.Likes++;
+                    response.Success = true;
+                    response.Mensagem = "Obrigado por curtir (y).";
+                    await db.SaveChangesAsync();
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+                return ResponseFactory.ResponseDBError();
+            }
+        }
+
+        public async Task<Response> Descurtir(int idEvento)
+        {
+            Response response = new SingleResponse<Evento>();
+
+            try
+            {
+                using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
+                {
+                    Evento evento = await db.Eventos.FindAsync(idEvento);
+                    if (evento == null)
+                    {
+                        response.Success = false;
+                        response.Mensagem = "Evento não encontrado";
+                        return response;
+                    }
+                    evento.Dislikes++;
+                    response.Success = true;
+                    response.Mensagem = "Obrigado por descurtir (y).";
+                    await db.SaveChangesAsync();
+                    return response;
+                }
+            }
+            catch (Exception)
+            {
+                return ResponseFactory.ResponseDBError();
+            }
         }
 
         public async Task<SingleResponse<Evento>> GetByID(int id)
@@ -95,11 +184,12 @@ namespace Service
                         eventoResponse.Mensagem = "Evento não encontrado";
                         return eventoResponse;
                     }
-                    eventoResponse.Success = false;
+                    eventoResponse.Success = true;
                     eventoResponse.Mensagem = "Evento encontrado com sucesso.";
                     eventoResponse.Item = evento;
                 }
             }
+
             catch (Exception)
             {
                 eventoResponse.Success = false;
@@ -133,31 +223,31 @@ namespace Service
         public async Task<DataResponse<Evento>> LerEventosPreferencia(int idUser)
         {
             DataResponse<Evento> eventoResponse = new DataResponse<Evento>();
+
             try
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
                     //Seleciona no banco de dados o usuário logado e trás as tags dele!
-                    Usuario usuario = await db.Usuarios.Include(c => c.Tags).ThenInclude(c=> c.Eventos).FirstOrDefaultAsync(c => c.ID == idUser);
+                    Usuario usuario = await db.Usuarios.Include(c => c.Tags).ThenInclude(c=> c.Eventos).ThenInclude(c=>c.Comentarios).FirstOrDefaultAsync(c => c.ID == idUser);
                     List<Tags> tags = usuario.Tags.ToList();
-                    List<Evento> eventosLinhaTempo = new List<Evento>();
+                    HashSet<Evento> eventosLinhaTempo = new HashSet<Evento>();
                     foreach (var tag in tags)
                     {
-                        List<Evento> eventos = tag.Eventos.Where(c => c.DataHoraFim > DateTime.Now).ToList();
-                        eventosLinhaTempo.AddRange(eventos);
+                        List<Evento> eventos = tag.Eventos.Where(c => c.DataHoraFim > DateTime.Now).OrderBy(c=> c.Likes).ThenBy(c=> c.Comentarios.Count).ToList();
+                        foreach (var item in eventos)
+                        {
+                            eventosLinhaTempo.Add(item);
+                        }
                     }
-                    eventoResponse.Data = eventosLinhaTempo;
+                    eventoResponse.Data = eventosLinhaTempo.ToList();
                     return eventoResponse;
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-            return null;
         }
 
         public async Task<Response> Update(Evento e)

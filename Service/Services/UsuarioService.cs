@@ -193,14 +193,37 @@ namespace Service
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
                     //Tecnica 1
-                    //db.Entry<Genero>(g).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    //db.Entry<Tags>(t).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     //db.SaveChanges();
 
                     //Tecnica 2
+                   
                     Usuario usuarioExistente = await db.Usuarios.FirstOrDefaultAsync(gen => gen.ID == u.ID);
+                    if (usuarioExistente == null)
+                    {
+                        return new Response()
+                        {
+                            Success = false,
+                            Mensagem = "Usuário não encontrado"
+                        };
+                    }
+                    
+                    foreach (Tags item in u.Tags)
+                    {
+                        db.Entry(item).State = EntityState.Unchanged;
+                    }
 
                     Usuario usuarioBanco = await db.Usuarios.FindAsync(u.ID);
-                    usuarioBanco.ID = u.ID;
+                    usuarioBanco.Nome = u.Nome;
+                    usuarioBanco.Telefone = u.Telefone;
+                    usuarioBanco.DataNascimento = u.DataNascimento;
+                    usuarioBanco.Genero = u.Genero;
+                    usuarioBanco.Bairro = u.Bairro;
+                    usuarioBanco.Rua = u.Rua;
+                    usuarioBanco.Numero = u.Numero;
+                    usuarioBanco.Complemento = u.Complemento;
+                    usuarioBanco.Tags = u.Tags;
+
                     await db.SaveChangesAsync();
                     return new Response()
                     {

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Domains
 {
-    public class Evento
+    public class Evento : IEqualityComparer<Evento>
     {
         public int ID { get; set; }
         public string Nome { get; set; }
@@ -26,5 +27,15 @@ namespace Domains
         public ICollection<Comentario> Comentarios { get; set; }
         public int QtdMaximaPessoas { get; set; }
         public ICollection<Tags> Tags { get; set; }
+
+        public bool Equals(Evento x, Evento y)
+        {
+            return x.ID == y.ID;
+        }
+
+        public int GetHashCode([DisallowNull] Evento obj)
+        {
+            return 10000;
+        }
     }
 }

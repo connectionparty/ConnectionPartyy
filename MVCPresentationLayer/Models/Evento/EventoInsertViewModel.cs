@@ -24,9 +24,7 @@ namespace MVCPresentationLayer.Models
         public bool EhPublico { get; set; }
         public ICollection<Tags> Tags { get; set; }
         public ICollection<Domains.Usuario> Participantes { get; set; }
-        public IFormFile Arquivo1 { get; set; }
-        public IFormFile Arquivo2{ get; set; }
-        public IFormFile Arquivo3 { get; set; }
+        public List<IFormFile> Arquivo { get; set; }
 
     }
 }

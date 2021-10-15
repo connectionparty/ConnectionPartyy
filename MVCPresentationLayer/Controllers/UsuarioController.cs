@@ -72,7 +72,9 @@ namespace MVCPresentationLayer.Controllers
             //string filePath = "~/imgPessoa/" + id + ".jpg";
             //Url.Content(filePath);
             string fileName = _appEnvironment.WebRootPath + FileHelper.PESSOA_DIRECTORY + id + FileHelper.EXTENSION;
+            int idUsuario = int.Parse(id);
             ViewBag.FileName = fileName;
+
             return View();
         }
 
@@ -124,7 +126,41 @@ namespace MVCPresentationLayer.Controllers
                 await viewModel.Arquivo.CopyToAsync(stream);
             }
 
-            return await Profile();
+            return RedirectToAction("Profile", "Usuario");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index");
+            }
+            //int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id.Value);
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index");
+            }
+
+            UsuarioEditViewModel viewModel = _mapper.Map<UsuarioEditViewModel>(responseUsuario.Item);
+            return View(responseUsuario.Item);
+        }
+        
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(UsuarioEditViewModel viewModel)
+        {
+            Usuario usuario = _mapper.Map<Usuario>(viewModel);
+            
+            Response response = await _usuarioService.Cadastrar(usuario);
+            if (!response.Success)
+            {
+                ViewBag.Errors = response.Mensagem;
+            }
+            return View();
         }
     }
 }

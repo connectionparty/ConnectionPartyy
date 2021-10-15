@@ -1,0 +1,152 @@
+﻿@model Domains.Evento
+
+
+@{
+    ViewData["Title"] = Model.ID;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+
+        div.flex-content {
+            display: flex;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div>
+        <div>
+            <center>
+                <h1> Nome Do Evento </h1>
+                <img src="/img/boy.png" alt="" />
+                <div class="flex-content">
+                    <div>
+                        <p style=" margin:3px;">Organizado por </p>
+                    </div>
+                    <div>
+                        <p style=" margin: 3px;"> @Model.Organizador.Nome</p>
+                    </div>
+                </div>
+
+            </center>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-statistics">
+                    <div class="text-center mt-4 border-bottom-1 pb-3">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.Participantes.Count</h3><span>Marcaram Presença</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.QtdMaximaPessoas</h3><span>Maximo De Pessoas</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">100</h3><span>Visualização</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="flex-content">
+                            <form action=@Url.Action("Curtir") method="post">
+                                <input type="hidden" value="@Model.ID" name="ID" />
+                                <input type="submit" value="Submit" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                <span>
+                                    <i class="fa fa-thumbs-down"></i>
+                                </span>Curtir
+                            </form>
+                            <button style="height: 50px;" class="btn btn-primary mr-3">
+                                <span>
+                                    <i class="fa fa-thumbs-down"></i>
+                                </span>Dislike
+                            </button>
+                            <form method="post">
+                                <input type="hidden" value="@Model.ID" name="ID" />
+                                <input type="submit" asp-page-handler="CheckIn" value="Submit" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                <span>
+                                    <i class="fa fa-thumbs-down"></i>
+                                </span>Seguir
+                            </form>
+                        </div>
+                        <hr />
+                        <!-- CAMPO DE COMENTARIO-->
+                        <form action=@Url.Action("Comentario") method="post">
+                        <div class="post-input">
+                            <input type="hidden" value="@Model.ID" name="ID"/>
+                            <textarea name="Comentario" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Digite seu comentário aqui"></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
+                            <br />
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                        </form>
+                        <br />
+
+                    </div>
+                </div>
+                <div class="profile-blog pt-3 border-bottom-1 pb-1">
+                    <h4 class="text-primary d-inline">Descrição Do Evento</h4><a href="javascript:void()" class="pull-right f-s-16"></a>
+                    <p>@Model.Descricao</p>
+                </div>
+
+                <div class="profile-interest mt-4 pb-2 border-bottom-1">
+                    <h4 class="text-primary d-inline">Tags</h4>
+
+                    @foreach (var item in Model.Tags)
+                    {
+                        <button type="button" class="btn btn-outline-primary mb-1">@item.Nome</button>
+                    }
+                </div>
+
+
+                <br />
+                <h4 class="text-primary d-inline">Datas</h4>
+                <p>@Model.DataHoraInicio</p> <p>@Model.DataHoraFim</p>
+                <br />
+                <h4 class="text-primary d-inline">@Model.Rua</h4>
+                <p>ENDEREÇO AQUI</p>
+                <br />
+                <h4 class="text-primary d-inline">Valor R$</h4>
+                <p>R$@Model.Valor</p>
+                <br />
+                <h4 class="text-primary d-inline">Idade Minima</h4>
+                <p>@Model.IdadeMinima</p>
+                <br />
+
+                <h4 class="text-primary d-inline">Precisa Apresentar Documentos</h4>
+
+                @if (Model.PrecisaDocumento)
+                {
+                    <p>Sim</p>
+                }
+                else
+                {
+                    <p>Não</p>
+                }
+                <br />
+                <h4 class="text-primary d-inline">Qual O Tipo Do Evento</h4>
+                <p>RESPOSTA AQUI</p>
+                <br />
+                <h4 class="text-primary d-inline">Quantidade Máxima De Pessoas</h4>
+                <p>@Model.QtdMaximaPessoas</p>
+                <br />
+
+
+
+            </div>
+            <br />
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

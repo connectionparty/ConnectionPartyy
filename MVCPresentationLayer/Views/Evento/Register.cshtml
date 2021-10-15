@@ -71,11 +71,11 @@
     <div class="col-sm-9">
         <p>Necessário apresentar documento</p>
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <input type="radio" id="customRadio1" name="PrecisaDocumento" value="true" class="custom-control-input">
             <label class="custom-control-label" for="customRadio1">Sim</label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <input type="radio" id="customRadio2" name="PrecisaDocumento" value="false" class="custom-control-input">
             <label class="custom-control-label" for="customRadio2">Não</label>
         </div>
     </div>
@@ -83,11 +83,11 @@
     <div class="col-sm-9">
         <p>Tipo do Evento</p>
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio2" class="custom-control-input">
+            <input type="radio" id="customRadio3" name="EhPublico" value="true" class="custom-control-input">
             <label class="custom-control-label" for="customRadio3">Público</label>
         </div>
         <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input">
+            <input type="radio" id="customRadio4" name="EhPublico" value="false" class="custom-control-input">
             <label class="custom-control-label" for="customRadio4">Privado</label>
         </div>
     </div>
@@ -96,9 +96,9 @@
     <br />
     <input style="border-color: black; color: black;" type="text" name="QtdMaximaPessoas" size="140" class="form-control" placeholder="Informe o número máximo de convidados">
     <br />
-    <div>
+    <div style="border:2px; border-color: black; color: black;">
         <label>Selecione as tags para o evento</label>
-        <select class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
+        <select style="width: 100%;" class="select2-multiple form-control" multiple="multiple" name="Tags" id="Tags">
             @foreach (Domains.Tags t in ViewBag.Tags)
             {
                 <option value="@t.ID">@t.Nome</option>
@@ -106,7 +106,7 @@
         </select>
     </div>
     <br />
-    <div style="margin: 2px;">
+    <div style="margin: 2px; border: 2px; border-color: black">
         <label>Selecione os usuários convidados para o evento</label>
         <select class="select2-multiple form-control" multiple="multiple" name="Participantes" id="Participantes">
             @foreach (Domains.Usuario u in ViewBag.Usuarios)
@@ -116,25 +116,13 @@
         </select>
     </div>
     <br />
-
-    <br />
-
-    <div class="custom-file">
-        <input type="file" class="custom-file-input" name="Arquivo1" id="customFile">
-        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
-    </div>
-    <br />
+    <label> Escolha as fotos do seu evento</label>
     <br />
     <div class="custom-file">
-        <input type="file" class="custom-file-input" name="Arquivo2" id="customFile">
+        <input type="file" class="custom-file-input" multiple name="Arquivo1" id="customFile">
         <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
     </div>
-    <br />
-    <br />
-    <div class="custom-file">
-        <input type="file" class="custom-file-input" name="Arquivo3" id="customFile">
-        <label style="border-color: black; color: black;" class="custom-file-label" for="customFile">Escolher arquivo</label>
-    </div>
+    
     <br />
     <br />
     <div>

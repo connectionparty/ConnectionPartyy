@@ -2,8 +2,10 @@
 using Domains;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MVCPresentationLayer.Models;
+using MVCPresentationLayer.Models.Evento;
 using Service.Interfaces;
 using Service.Responses;
 using System;
@@ -32,7 +34,7 @@ namespace MVCPresentationLayer.Controllers
             this._tagService = tagService;
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             DataResponse<Evento> eventos = await this._eventoService.LerEventosPreferencia(int.Parse(HttpContext.User.Claims.ToList()[2].Value));
@@ -60,21 +62,23 @@ namespace MVCPresentationLayer.Controllers
             int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
             SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id);
 
-
             string[] tags = this.Request.Form["Tags"].ToString().Split(',');
-
             string[] usuarios = this.Request.Form["Participantes"].ToString().Split(',');
-
+            string[] documento = this.Request.Form["PrecisaDocumento"].ToString().Split(',');
 
             if (responseUsuario.Success)
             {
                 evento.UsuarioID = responseUsuario.Item.ID;
             }
 
-            if (viewModel.Arquivo1 == null || viewModel.Arquivo1.Length == 0 || !FileHelper.IsValidExtension(viewModel.Arquivo1.FileName))
+            for (int i = 0; i <= viewModel.Arquivo.Count; i++)
             {
-                ViewBag.Error = "Insira pelo menos uma imagem. Extensões aceitas: .jpg, .gif, .jpeg ou .png.";
-                return await Register();
+                var foto = viewModel.Arquivo[i];
+                if (foto == null || foto.Length == 0 || !FileHelper.IsValidExtension(foto.FileName))
+                {
+                    ViewBag.Error = "Insira pelo menos uma imagem. Extensões aceitas: .jpg, .gif, .jpeg ou .png.";
+                    return await Register();
+                }
             }
 
             evento.Participantes = new List<Usuario>();
@@ -94,6 +98,7 @@ namespace MVCPresentationLayer.Controllers
                     ID = int.Parse(item)
                 });
             }
+
             Response response = await _eventoService.Cadastrar(evento);
             if (!response.Success)
             {
@@ -108,47 +113,24 @@ namespace MVCPresentationLayer.Controllers
 
             Directory.CreateDirectory(fullFileName);
 
-            using (FileStream stream = new FileStream(fullFileName + "\\1.jpg", FileMode.Create))
-            {
-                await viewModel.Arquivo1.CopyToAsync(stream);
-            }
-            using (FileStream stream = new FileStream(fullFileName + "\\2.jpg", FileMode.Create))
-            {
-                await viewModel.Arquivo2.CopyToAsync(stream);
-            }
-            using (FileStream stream = new FileStream(fullFileName + "\\3.jpg", FileMode.Create))
-            {
-                await viewModel.Arquivo3.CopyToAsync(stream);
-            }
+            //using (FileStream stream = new FileStream(fullFileName + "\\1.jpg", FileMode.Create))
+            //{
+            //    await viewModel.Arquivo1.CopyToAsync(stream);
+            //}
+            //using (FileStream stream = new FileStream(fullFileName + "\\2.jpg", FileMode.Create))
+            //{
+            //    await viewModel.Arquivo2.CopyToAsync(stream);
+            //}
+            //using (FileStream stream = new FileStream(fullFileName + "\\3.jpg", FileMode.Create))
+            //{
+            //    await viewModel.Arquivo3.CopyToAsync(stream);
+            //}
             return await Register();
         }
+        
 
-        public async Task<IActionResult> CheckIn(int id)
-        {
-            SingleResponse<Evento> responseEvento = await _eventoService.GetByID(id);
-            int idUser = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
-            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(idUser);
-
-            if (!responseUsuario.Success)
-            {
-                ViewBag.Errors = responseUsuario.Mensagem;
-                return View();
-            }
-            if (!responseEvento.Success)
-            {
-                ViewBag.Errors = responseEvento.Mensagem;
-                return View();
-            }
-            Response response = await _eventoService.CheckInUsuario(responseEvento, responseUsuario);
-            if (!response.Success)
-            {
-                ViewBag.Errors = response.Mensagem;
-                return View();
-            }
-            return await Index();
-        }
-
-        public async Task<IActionResult> EventoDetalhes(int? id)
+        [Authorize]
+        public async Task<IActionResult> Details(int? id)
         {
             if (!id.HasValue)
             {
@@ -157,12 +139,112 @@ namespace MVCPresentationLayer.Controllers
             SingleResponse<Evento> eventoResponse = await _eventoService.GetByID(id.Value);
             if (!eventoResponse.Success)
             {
+                return RedirectToAction("Index");
+            }
+
+            return View(eventoResponse.Item);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Details(EventoSubscription viewModel)
+        {
+            if (viewModel.ID == 0)
+            {
                 return await this.Index();
             }
 
+            int idUser = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            Response response = await _eventoService.CheckInUsuario(viewModel.ID, idUser);
 
-
-            return View();
+            return RedirectToAction("Index");
         }
+
+        //O CODIGO ABAIXO FOI OQUE ENTENDEMOS DA INSTRUÇÃO DO SR. CELO MIYAGI :)
+        //Possibilade de chamar o metodo do service???
+        //Como ele vai cair no controller?
+        //Caiu no controller mas id retorna nulo
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Curtir(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index");
+            }
+            Response response = await _eventoService.Curtir(id.Value);
+            if (!response.Success)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("Descurtir")]
+        public async Task<IActionResult> Descurtir(int? id)
+        {
+            return null;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Comentario(EventoComentarioViewModel viewModel)
+        {
+            if (viewModel.ID == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id);
+            if (!responseUsuario.Success)
+            {
+                return RedirectToAction("/Usuario/Login");
+            }
+
+            Comentario comentario = new Comentario();
+            comentario.UsuarioID = responseUsuario.Item.ID;
+            comentario.EventoID = viewModel.ID;
+            comentario.Texto = viewModel.Comentario;
+
+            Response response = await _eventoService.Comentar(comentario);
+            if (!response.Success)
+            {
+                ViewBag.Errors = response.Mensagem;
+            }
+            return RedirectToAction("Index");
+
+
+            //Comentario comentario = new Comentario();
+            //SingleResponse<Evento> eventoResponse = await _eventoService.GetByID(id.Value);
+
+            //if (!eventoResponse.Success)
+            //{
+            //    return RedirectToAction("Index");
+            //}
+
+            //int idUsuario = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            //SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(idUsuario);
+
+            //if (!responseUsuario.Success)
+            //{
+            //    return RedirectToAction("/Usuario/Login");
+            //}
+
+            //comentario.UsuarioID = responseUsuario.Item.ID;
+            //comentario.EventoID = eventoResponse.Item.ID;
+
+            //Response response = await _eventoService.Comentar(idUsuario, id.Value);
+            //if (!response.Success)
+            //{
+            //    return RedirectToAction("Index");
+            //}
+
+        }
+
     }
 }

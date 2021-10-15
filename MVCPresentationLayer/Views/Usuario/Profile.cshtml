@@ -1,3 +1,4 @@
+@model  Domains.Usuario
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -42,7 +43,7 @@
                                                 <div style="align-content: start;" class="col-xl-10 col-sm-4 border-right-1 prf-col">
                                                     <div class="profile-name">
                                                         <h4 class="text-primary">Pedro da Silva</h4>
-                                                        <p>Desenvolvedor De Software</p>
+                                                        @*<p>Desenvolvedor De Software</p>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,6 +93,11 @@
                                         <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
                                             <a href="javascript:void()" class="interest-cat">
                                                 <p>Eventos Gerais</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
+                                            <a href="javascript:void()" class="interest-cat">
+                                                <p>Palestras</p>
                                             </a>
                                         </div>
                                         <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
@@ -198,7 +204,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="col-9">
-                                                            <span>20</span>
+                                                            <span id="idade">18</span>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-4">
@@ -230,7 +236,7 @@
     <script src="./vendor/global/global.min.js"></script>
     <script src="./js/quixnav-init.js"></script>
     <script src="./js/custom.min.js"></script>
-
+    <script src="~/js/calcularidade.js"></script>
 
     
 

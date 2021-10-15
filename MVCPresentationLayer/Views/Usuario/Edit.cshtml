@@ -1,5 +1,6 @@
-﻿@{
-   ViewData["Title"]  = "Cadastro de Usuário";
+﻿@model MVCPresentationLayer.Models.UsuarioEditViewModel
+@{
+    ViewData["Title"] = "Edit";
 }
 
 <html>
@@ -48,7 +49,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Registrar-se</h1>
                                     </div>
-                                    <form action="post" method="post" enctype="multipart/form-data">
+                                    <form method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>Insira o seu nome</label> <br />
                                             <input style="border-color: black; color: black;" type="text" class="form-control" name="Nome" id="exampleInputFirstName" placeholder="Enter First Name">
@@ -170,12 +171,12 @@
                                             <input type="submit" class="btn btn-primary btn-block" value="Registrar">
                                         </div>
                                         <!-- <hr>
-    <a href="index.html" class="btn btn-google btn-block">
-        <i class="fab fa-google fa-fw"></i> Register with Google
-    </a>
-    <a href="index.html" class="btn btn-facebook btn-block">
-        <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-    </a> -->
+                                        <a href="index.html" class="btn btn-google btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Register with Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                        </a> -->
 
                                     </form>
 
@@ -198,11 +199,9 @@
         <script src="~/js/viacep.js"></script>
 
         <script>
-            $(document).ready(function () {
+    $(document).ready(function () {
                 $('#Tags').select2();
-            });
-
-        </script>
+            });</script>
     }
 </body>
 </html>

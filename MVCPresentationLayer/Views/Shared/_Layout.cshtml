@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="/img/logo/logo-connection-party.png" rel="icon">
+    <link href="/img/logo/logo.png" rel="icon">
     <title>Connection Party</title>
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/ruang-admin.min.css" rel="stylesheet">
     <link href="~/css/banner.css" rel="stylesheet" />
     <link href="~/vendor/select2/dist/css/select2.css" rel="stylesheet" />
+    <link href="~/css/banner.css" rel="stylesheet" />
     @RenderSection("Styles", false)
 
 </head>
@@ -24,64 +25,54 @@
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:19943/">
-                @* << TALVEZ PRECISE MODIFICAR O LINK DO LOCALHOST CASO HAJA ERROS*@
                 <div class="sidebar-brand-icon">
-                    <img src="/img/logo/nova-logo-connection-party.png">
+                    <img src="/img/logo/logo.png">
                 </div>
                 <div style="font-size: 10pt" class="sidebar-brand-text mx-2">Connection Party</div>
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:19943/" @* << TALVEZ PRECISE MODIFICAR O LINK DO LOCALHOST CASO HAJA ERROS*@
-                    <span>
-                        <i class="fas fa-fw fa-table"></i>
-                    </span>Página Inicial
+                <a class="nav-link" href="http://localhost:19943/">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Página Inicial</span>
                 </a>
             </li>
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">
-                Features
-            </div>
             @*Botão para cadastrar eventos na tela inicial*@
             <li class="nav-item active">
                 <a class="nav-link" href="/Evento/Register">
-                    <span>
-                        <i class="fas fa-fw fa-map-marker"></i>
-                    </span>Cadastrar Evento
+                    <i class="fas fa-fw fa-map-marker"></i>
+                    <span>Cadastrar Evento</span>
                 </a>
             </li>
-            @*Botão sobre nós na tela inicial*@
+            @*Botão para ir para o feed de eventos*@
             <li class="nav-item active">
-                <a class="nav-link" href="/Usuario/SobreNos">
-                    <span>
-                        <i class="fas fa-fw fa-info"></i>
-                    </span>Sobre Nós
+                <a class="nav-link" href="/Evento/Index">
+                    <i class="fas fa-fw fa-map-marker"></i>
+                    <span>Eventos</span>
                 </a>
             </li>
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">
-                Examples
-            </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
-                   aria-controls="collapsePage">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Pages</span>
+            @*Botão para ir para a tela de login de usuario*@
+            <li class="nav-item active">
+                <a class="nav-link" href="/Usuario/Login">
+                    <i class="fas fa-fw fa-map-marker"></i>
+                    <span>Login</span>
                 </a>
-                <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Example Pages</h6>
-                        <a class="collapse-item" href="/Usuario/CadastroDeEventos">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span>
+            @*Botão para ir para a tela de registro de usuario*@
+            <li class="nav-item active">
+                <a class="nav-link" href="/Usuario/Register">
+                    <i class="fas fa-fw fa-map-marker"></i>
+                    <span>Registrar-se</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            @*Botão sobre nós na tela inicial*@
+            <li class="nav-item active">
+                <a class="nav-link" href="/Home/SobreNos">
+                    <i class="fas fa-fw fa-info"></i>
+                    <span>Sobre Nós</span>
                 </a>
             </li>
             <hr class="sidebar-divider">
@@ -318,13 +309,12 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
+    <script src="~/js/banner.js"></script>
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/js/ruang-admin.min.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
-    <script src="~/js/banners.js"></script>
     <script src="~/vendor/select2/dist/js/select2.js"></script>
     <script>
         function pegarNome() {

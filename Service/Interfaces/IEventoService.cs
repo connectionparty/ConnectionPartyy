@@ -15,7 +15,9 @@ namespace Service.Interfaces
         Task<SingleResponse<Evento>> GetByID(int id);
         Task<Response> Update(Evento e);
         Task<DataResponse<Evento>> LerEventosPreferencia(int idUser);
-        Task<Response> CheckInUsuario(SingleResponse<Evento> eventoResponse, SingleResponse<Usuario> usuarioResponse);
-
+        Task<Response> CheckInUsuario(int idEvento, int idUsuario);
+        Task<Response> Curtir(int idEvento);
+        Task<Response> Descurtir(int idEvento);
+        Task<Response> Comentar(Comentario c);
     }
 }
