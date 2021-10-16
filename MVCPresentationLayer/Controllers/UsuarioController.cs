@@ -137,7 +137,7 @@ namespace MVCPresentationLayer.Controllers
             {
                 return RedirectToAction("Index");
             }
-            //int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+           //int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
             SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id.Value);
             if (!id.HasValue)
             {
@@ -145,7 +145,7 @@ namespace MVCPresentationLayer.Controllers
             }
 
             UsuarioEditViewModel viewModel = _mapper.Map<UsuarioEditViewModel>(responseUsuario.Item);
-            return View(responseUsuario.Item);
+            return View(viewModel);
         }
         
 
@@ -155,7 +155,7 @@ namespace MVCPresentationLayer.Controllers
         {
             Usuario usuario = _mapper.Map<Usuario>(viewModel);
             
-            Response response = await _usuarioService.Cadastrar(usuario);
+            Response response = await _usuarioService.Update(usuario);
             if (!response.Success)
             {
                 ViewBag.Errors = response.Mensagem;

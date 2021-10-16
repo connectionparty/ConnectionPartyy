@@ -65,13 +65,14 @@ namespace MVCPresentationLayer.Controllers
             string[] tags = this.Request.Form["Tags"].ToString().Split(',');
             string[] usuarios = this.Request.Form["Participantes"].ToString().Split(',');
             string[] documento = this.Request.Form["PrecisaDocumento"].ToString().Split(',');
+            string[] ehPublico = this.Request.Form["EhPublico"].ToString().Split(',');
 
             if (responseUsuario.Success)
             {
                 evento.UsuarioID = responseUsuario.Item.ID;
             }
 
-            for (int i = 0; i <= viewModel.Arquivo.Count; i++)
+            for (int i = 0; i < viewModel.Arquivo.Count; i++)
             {
                 var foto = viewModel.Arquivo[i];
                 if (foto == null || foto.Length == 0 || !FileHelper.IsValidExtension(foto.FileName))
@@ -110,21 +111,9 @@ namespace MVCPresentationLayer.Controllers
             string caminho_WebRoot = _appEnvironment.WebRootPath;
             string idEvento = evento.ID.ToString();
             string fullFileName = caminho_WebRoot + FileHelper.EVENTO_DIRECTORY + idEvento;
-
             Directory.CreateDirectory(fullFileName);
-
-            //using (FileStream stream = new FileStream(fullFileName + "\\1.jpg", FileMode.Create))
-            //{
-            //    await viewModel.Arquivo1.CopyToAsync(stream);
-            //}
-            //using (FileStream stream = new FileStream(fullFileName + "\\2.jpg", FileMode.Create))
-            //{
-            //    await viewModel.Arquivo2.CopyToAsync(stream);
-            //}
-            //using (FileStream stream = new FileStream(fullFileName + "\\3.jpg", FileMode.Create))
-            //{
-            //    await viewModel.Arquivo3.CopyToAsync(stream);
-            //}
+            FileHelper.SavePicture(viewModel.Arquivo, fullFileName);
+            
             return await Register();
         }
         

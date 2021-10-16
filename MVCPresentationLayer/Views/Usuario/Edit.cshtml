@@ -50,9 +50,10 @@
                                         <h1 class="h4 text-gray-900 mb-4">Registrar-se</h1>
                                     </div>
                                     <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" value=@Model.ID name="ID" />
                                         <div class="form-group">
                                             <label>Insira o seu nome</label> <br />
-                                            <input style="border-color: black; color: black;" type="text" class="form-control" name="Nome" id="exampleInputFirstName" placeholder="Enter First Name">
+                                            <input style="border-color: black; color: black;" type="text" class="form-control" value=@Model.Nome name="Nome" id="exampleInputFirstName" placeholder="Enter First Name">
                                         </div>
                                         <div class="form-group">
                                             <label>Insira o seu username</label> <br />

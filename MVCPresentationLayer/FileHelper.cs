@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +19,18 @@ namespace MVCPresentationLayer
             return fileName.Contains(".jpg") || fileName.Contains(".png") || fileName.Contains(".jpeg") || fileName.Contains(".gif");
         }
 
-
+        public static void SavePicture(List<IFormFile> arquivos, string fullFileName)
+        {
+            int count = 1;
+            foreach (var item in arquivos)
+            {
+                using (FileStream stream = new FileStream(fullFileName + "\\"+count+".jpg", FileMode.Create))
+                {
+                    item.CopyToAsync(stream);
+                }
+                count++;
+            }
+        }
 
     }
 }
