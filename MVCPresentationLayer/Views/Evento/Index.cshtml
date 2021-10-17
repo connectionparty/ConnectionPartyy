@@ -25,28 +25,6 @@
     <p>
         Fim: @item.DataHoraFim
     </p>
-    <button style="margin: 2px;" class="btn btn-primary mr-3">
-        <span class="mr-3">
-            <i class="fa fa-thumbs-up"></i>
-        </span>Like
-    </button>
-    <button style="margin: 2px;" class="btn btn-primary mr-3">
-        <span>
-            <i class="fa fa-thumbs-down"></i>
-        </span>Dislike
-    </button>
-
-    <button class="btn btn-secondary">
-        <span class="mr-3">
-            <i class="fa fa-reply"></i>
-        </span>Compartilhar
-    </button>
-    @foreach (var i in item.Tags)
-    {
-        <button style="margin: 2px;" class="btn btn-secondary">
-            <i> @i.Nome</i>
-        </button>
-    }
 
 </div>
 }

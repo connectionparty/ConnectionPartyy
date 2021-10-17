@@ -131,18 +131,18 @@ namespace MVCPresentationLayer.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit()
         {
-            if (!id.HasValue)
+            int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
+            if (id == 0)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("/Home/Index");
             }
-           //int id = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
-            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id.Value);
-            if (!id.HasValue)
-            {
-                return RedirectToAction("Index");
-            }
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(id);
+            //if (id == 0)
+            //{
+            //    return redirecttoaction("/home");
+            //}
 
             UsuarioEditViewModel viewModel = _mapper.Map<UsuarioEditViewModel>(responseUsuario.Item);
             return View(viewModel);

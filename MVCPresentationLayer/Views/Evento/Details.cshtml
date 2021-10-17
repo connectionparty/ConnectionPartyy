@@ -15,6 +15,10 @@
         div.flex-content {
             display: flex;
         }
+
+        p {
+            color: black;
+        }
     </style>
 
 </head>
@@ -24,7 +28,7 @@
     <div>
         <div>
             <center>
-                <h1> Nome Do Evento </h1>
+                <h1> @Model.Nome </h1>
                 <img src="/img/boy.png" alt="" />
                 <div class="flex-content">
                     <div>
@@ -44,47 +48,42 @@
                     <div class="text-center mt-4 border-bottom-1 pb-3">
                         <div class="row">
                             <div class="col">
+                                <h3 class="m-b-0">@Model.Likes</h3><span>Likes</span>
+                            </div>
+                            <div class="col">
+                                <h3 class="m-b-0">@Model.Dislikes</h3><span>Dislikes</span>
+                            </div>
+                            <div class="col">
                                 <h3 class="m-b-0">@Model.Participantes.Count</h3><span>Marcaram Presença</span>
                             </div>
                             <div class="col">
                                 <h3 class="m-b-0">@Model.QtdMaximaPessoas</h3><span>Maximo De Pessoas</span>
                             </div>
-                            <div class="col">
-                                <h3 class="m-b-0">100</h3><span>Visualização</span>
-                            </div>
                         </div>
                         <br>
                         <div class="flex-content">
-                            <form action=@Url.Action("Curtir") method="post">
-                                <input type="hidden" value="@Model.ID" name="ID" />
-                                <input type="submit" value="Submit" style=" height: 50px;" href="" class="btn btn-primary mr-3">
-                                <span>
-                                    <i class="fa fa-thumbs-down"></i>
-                                </span>Curtir
-                            </form>
-                            <button style="height: 50px;" class="btn btn-primary mr-3">
-                                <span>
-                                    <i class="fa fa-thumbs-down"></i>
-                                </span>Dislike
-                            </button>
-                            <form method="post">
-                                <input type="hidden" value="@Model.ID" name="ID" />
-                                <input type="submit" asp-page-handler="CheckIn" value="Submit" style=" height: 50px;" href="" class="btn btn-primary mr-3">
-                                <span>
-                                    <i class="fa fa-thumbs-down"></i>
-                                </span>Seguir
-                            </form>
+                            <div>
+                                <form action=@Url.Action("Curtir") method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" value="Curtir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
+                            <div>
+                                <form action=@Url.Action("Descurtir") method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" value="Descurtir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
+                            <div>
+                                @*<label>⠀⠀⠀⠀⠀⠀⠀⠀</label>   RIP BAIANAGEM DE CARACETERE INVISIVEL :(*@
+                                <form method="post">
+                                    <input type="hidden" value="@Model.ID" name="ID" />
+                                    <input type="submit" asp-page-handler="CheckIn" value="Seguir" style=" height: 50px;" href="" class="btn btn-primary mr-3">
+                                </form>
+                            </div>
                         </div>
                         <hr />
-                        <!-- CAMPO DE COMENTARIO-->
-                        <form action=@Url.Action("Comentario") method="post">
-                        <div class="post-input">
-                            <input type="hidden" value="@Model.ID" name="ID"/>
-                            <textarea name="Comentario" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Digite seu comentário aqui"></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
-                            <br />
-                            <input type="submit" class="btn btn-primary" />
-                        </div>
-                        </form>
+
                         <br />
 
                     </div>
@@ -108,14 +107,32 @@
                 <h4 class="text-primary d-inline">Datas</h4>
                 <p>@Model.DataHoraInicio</p> <p>@Model.DataHoraFim</p>
                 <br />
-                <h4 class="text-primary d-inline">@Model.Rua</h4>
-                <p>ENDEREÇO AQUI</p>
+                <h4 class="text-primary d-inline">Endereço</h4>
+                <p>Bairro: @Model.Bairro, Rua: @Model.Rua, Número: @Model.Numero </p>
                 <br />
-                <h4 class="text-primary d-inline">Valor R$</h4>
-                <p>R$@Model.Valor</p>
+                @if (Model.Valor > 0)
+                {
+                    <h4 class="text-primary d-inline">Valor R$</h4>
+                    <p>@Model.Valor</p>
+                }
+                @if (Model.Valor == null)
+                {
+                    <h4 class="text-primary d-inline">Valor R$</h4>
+                    <p>Gratuito</p>
+                }
+
                 <br />
-                <h4 class="text-primary d-inline">Idade Minima</h4>
-                <p>@Model.IdadeMinima</p>
+                @if (Model.IdadeMinima > 0)
+                {
+                    <h4 class="text-primary d-inline">Idade Minima</h4>
+                    <p>@Model.IdadeMinima</p>
+                }
+                @if (Model.IdadeMinima == 0)
+                {
+                    <h4 class="text-primary d-inline">Idade Minima</h4>
+                    <p>Livre para todas as idades</p>
+                }
+
                 <br />
 
                 <h4 class="text-primary d-inline">Precisa Apresentar Documentos</h4>
@@ -135,9 +152,103 @@
                 <h4 class="text-primary d-inline">Quantidade Máxima De Pessoas</h4>
                 <p>@Model.QtdMaximaPessoas</p>
                 <br />
+                <hr />
+                <!-- CAMPO DE COMENTARIO-->
+                @*<form action=@Url.Action("Comentario") method="post">
+            <div class="post-input">
+                <input type="hidden" value="@Model.ID" name="ID" />
+                <textarea name="Comentario" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Digite seu comentário aqui"></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
+                <br />
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </form>*@
 
-                
+                <!-- CAMPO DE COMENTARIO TESTE-->
 
+                <section id="comment--new" class="comment">
+                    <form action=@Url.Action("Comentario") method="post" id="comment__form">
+                        <input type="hidden" value="@Model.ID" name="ID" />
+                        <textarea name="Comentario" style="width: 500px;" id="comment__textarea" placeholder="Comente sobre o evento..." cols="30" rows="4" maxlength="240"></textarea>
+                        <br />
+                        <button type="submit" class="btn btn-primary mr-3" id="comment--send">Comentar</button>
+                    </form>
+
+                </section>
+                <br />
+
+                @foreach (var item in Model.Comentarios)
+                {
+                    <div id="comments-container">
+
+                        <ul id="comments">
+                            <li class="comment">
+                                <div class="avatar">
+                                    <a href="#">
+                                        <img src="https://secure.gravatar.com/avatar/de764cb701641bd5ca3419fda6186edb?d=retro&s=55" /> <!--AQUI VAI A FOTO DO USUARIO QUE COMENTOU-->
+                                    </a>
+                                </div>
+                                <div class="comment__content">
+                                    <header>
+                                        <a href="#">
+                                            <span class="user__link">@Model.</span>
+                                        </a>
+                                        <span class="comment__pub-date"> - posted 1 week ago</span>
+                                        <a href="#" title="report abuse" class="comment__action">
+                                            <i class="fa fa-exclamation-triangle comment__action--report-abuse" aria-hidden="true"></i>
+                                        </a>
+                                    </header>
+                                    <p>
+                                        @Model.Comentarios
+                                    </p>
+                                    <footer class="comment__action--footer">
+                                        <a href="#" title="like" class="comment__action">like</a>
+                                        <a href="#" title="reply" class="comment__action">reply</a>
+                                    </footer>
+                                </div>
+                                <ul class="comment__replies">
+                                    <li class="comment">
+                                        <div class="avatar">
+                                            <a href="#">
+                                                <img src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_53.png"
+                                                     alt="Eva photo avatar" class="avatar__img">
+                                            </a>
+                                        </div>
+                                        <div class="comment__content">
+                                            <header>
+                                                <a href="#">
+                                                    <span class="user__link">Eva</span>
+                                                </a>
+                                                <span class="comment__pub-date"> - posted 1 week ago</span>
+                                                <a href="#" title="report abuse" class="comment__action">
+                                                    <i class="fa fa-exclamation-triangle comment__action--report-abuse" aria-hidden="true"></i>
+                                                </a>
+                                            </header>
+                                            <p>
+                                                Sed felis lorem, venenatis sed malesuada vitae, tempor vel turpis. Mauris in dui velit, vitae mollis
+                                                risus.
+                                            </p>
+                                            <footer class="comment__action--footer">
+                                                <a href="#" title="like" class="comment__action">like</a>
+                                                <a href="#" title="reply" class="comment__action">reply</a>
+                                            </footer>
+                                        </div>
+                                    </li>
+                                    <li class="comment">
+                                        <div class="avatar">
+                                            <a href="#">
+                                                <img src="http://numbersarelife.com/nal/wp-content/uploads/2012/10/youre-faking-55x55.jpg"
+                                                     alt="Joe photo avatar" class="avatar__img">
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+                }
 
             </div>
             <br />

@@ -176,7 +176,16 @@ namespace MVCPresentationLayer.Controllers
         [ActionName("Descurtir")]
         public async Task<IActionResult> Descurtir(int? id)
         {
-            return null;
+            if (!id.HasValue)
+            {
+                return RedirectToAction("Index");
+            }
+            Response response = await _eventoService.Descurtir(id.Value);
+            if (!response.Success)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -208,30 +217,7 @@ namespace MVCPresentationLayer.Controllers
             return RedirectToAction("Index");
 
 
-            //Comentario comentario = new Comentario();
-            //SingleResponse<Evento> eventoResponse = await _eventoService.GetByID(id.Value);
-
-            //if (!eventoResponse.Success)
-            //{
-            //    return RedirectToAction("Index");
-            //}
-
-            //int idUsuario = int.Parse(HttpContext.User.Claims.ToList()[2].Value);
-            //SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(idUsuario);
-
-            //if (!responseUsuario.Success)
-            //{
-            //    return RedirectToAction("/Usuario/Login");
-            //}
-
-            //comentario.UsuarioID = responseUsuario.Item.ID;
-            //comentario.EventoID = eventoResponse.Item.ID;
-
-            //Response response = await _eventoService.Comentar(idUsuario, id.Value);
-            //if (!response.Success)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            
 
         }
 

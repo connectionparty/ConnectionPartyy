@@ -478,7 +478,6 @@ mark,
 
 .img-fluid {
   max-width: 100%;
-  height: auto;
 }
 
 .img-thumbnail {
@@ -6705,6 +6704,8 @@ button.bg-dark:focus {
 
 .rounded-circle {
   border-radius: 50% !important;
+  border-block: solid;
+  
 }
 
 .rounded-pill {
