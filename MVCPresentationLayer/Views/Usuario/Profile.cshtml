@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="~/css/style.css" rel="stylesheet">
-
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 
 <body>
@@ -31,11 +31,10 @@
                                                     {
                                                         string id = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
                                                         string filePath = "~/imgPessoa/" + id + ".jpg";
-                                                        Url.Content(filePath);
                                                         <div class="photo-content">
 
                                                             <div class="profile-photo">
-                                                                <img style="width: 300px; height: 300px; " src="@Url.Content(filePath)" class="img-fluid rounded-circle" alt="this is your profile image">
+                                                                <img style="width: 300px; height: 300px; " src="@Url.Content(filePath)" class="img-fluid. max-width: 100%" alt="this is your profile image">
                                                             </div>
 
                                                             <br />
@@ -43,7 +42,7 @@
                                                     }
                                                     <div style="align-content: start;" class="col-xl-10 col-sm-4 border-right-1 prf-col">
                                                         <div class="profile-name">
-                                                            <h4 class="text-primary">Pedro da Silva</h4>
+                                                            <h4 class="text-primary">@Model.Nome</h4>
                                                             @*<p>Desenvolvedor De Software</p>*@
                                                         </div>
                                                     </div>
@@ -88,26 +87,16 @@
                                 <div class="profile-interest mt-4 pb-2 border-bottom-1">
                                     <h5 class="text-primary d-inline">Interesses</h5>
                                     <div class="row mt-4">
-                                        <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
-                                            <a href="javascript:void()" class="interest-cat">
-                                                <p>Festas</p>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
-                                            <a href="javascript:void()" class="interest-cat">
-                                                <p>Eventos Gerais</p>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
-                                            <a href="javascript:void()" class="interest-cat">
-                                                <p>Palestras</p>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
-                                            <a href="javascript:void()" class="interest-cat">
-                                                <p>Palestras</p>
-                                            </a>
-                                        </div>
+                                        @foreach (var item in Model.Tags)
+                                        {
+                                            <div class="col-lg-4 col-xl-4 col-sm-4 col-6 int-col">
+                                                <a href="javascript:void()" class="interest-cat">
+                                                    <p>@item.Nome</p>
+                                                </a>
+                                            </div>
+                                        }
+
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +109,10 @@
                                     <div class="custom-tab-1">
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item">
-                                                <a href="#my-posts" data-toggle="tab" class="nav-link active show">Posts</a>
+                                                <a href="#my-posts" data-toggle="tab" class="nav-link active show">Eventos Criados</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#my-events" data-toggle="tab" class="nav-link">Eventos Participados</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="#about-me" data-toggle="tab" class="nav-link">Sobre mim</a>
@@ -129,45 +121,103 @@
                                         <div class="tab-content">
                                             <div id="my-posts" class="tab-pane fade active show">
                                                 <div class="my-post-content pt-3">
-                                                    <div class="post-input">
-                                                        <textarea name="textarea" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Escreva oque você está pensando..."></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
-                                                        <br />
-                                                        <a href="javascript:void()"><i class="ti-camera"></i> </a><a href="javascript:void()" class="btn btn-primary">Postar</a>
-                                                    </div>
-                                                    <hr />
                                                     <br />
                                                     <div class="profile-uoloaded-post border-bottom-1 pb-5">
-                                                        <img style="width: 650px; height: 359px;" src="/img/profile/profile-party-image.png" alt="" class="img-fluid">
-                                                        <br />
-                                                        <br />
-                                                        <div>
+                                                        @foreach (var item in Model.EventosCriados)
+                                                        {
+                                                            <img style="width: 650px; height: 359px;" src="/img/profile/profile-party-image.png" alt="" class="img-fluid">
+                                                            <br />
+                                                            <br />
+                                                            <div>
 
-                                                        </div>
-                                                        <a class="post-title" href="javascript:void()">
-                                                            <h4 href="">Festa De Encerramento de Curso</h4>
-                                                        </a>
-                                                        <p>
-                                                            Festa de Encerramento de curso na Proway Centro de Blumenau. Dia 23/10/21
-                                                        </p>
-                                                        <button style="margin: 2px;" class="btn btn-primary mr-3">
-                                                            <span class="mr-3">
-                                                                <i class="fa fa-thumbs-up"></i>
-                                                            </span>Like
-                                                        </button>
-                                                        <button style="margin: 2px;" class="btn btn-primary mr-3">
-                                                            <span>
-                                                                <i class="fa fa-thumbs-down"></i>
-                                                            </span>Dislike
-                                                        </button>
+                                                            </div>
+                                                            <a class="post-title" href="/Evento/Details/@item.ID">
+                                                                <h4>@item.Nome</h4>
+                                                            </a>
+                                                            <p>
+                                                                @item.Descricao
+                                                            </p>
+                                                            <p>Início: @item.DataHoraInicio. Fim: @item.DataHoraFim.</p>
+                                                            <hr />
+                                                            @*foreach (var item2 in item.Tags)
+                        {
+                            <button type="button" class="btn btn-outline-primary mb-1">@item2.Nome</button>
+                        }*@
 
-                                                        <button class="btn btn-secondary">
-                                                            <span class="mr-3">
-                                                                <i class="fa fa-reply"></i>
-                                                            </span>Compartilhar
-                                                        </button>
+                                                            //                                                @*<button style="margin: 2px;" class="btn btn-primary mr-3">
+                                                            //    <span class="mr-3">
+                                                            //        <i class="fa fa-thumbs-up"></i>
+                                                            //    </span>Like
+                                                            //</button>
+                                                            //<button style="margin: 2px;" class="btn btn-primary mr-3">
+                                                            //    <span>
+                                                            //        <i class="fa fa-thumbs-down"></i>
+                                                            //    </span>Dislike
+                                                            //</button>
+
+                                                            //<button class="btn btn-secondary">
+                                                            //    <span class="mr-3">
+                                                            //        <i class="fa fa-reply"></i>
+                                                            //    </span>Compartilhar
+                                                            //</button>*@
+                                                        }
+
                                                     </div>
                                                 </div>
                                             </div>
+
+
+
+                                            <div id="my-events" class="tab-pane fade">
+                                                <div class="my-post-content pt-3">
+                                                    <br />
+                                                    <div class="profile-uoloaded-post border-bottom-1 pb-5">
+                                                        @foreach (var item in Model.EventosParticipados)
+                                                        {
+                                                            <img style="width: 650px; height: 359px;" src="/img/profile/profile-party-image.png" alt="" class="img-fluid">
+                                                            <br />
+                                                            <br />
+                                                            <div>
+
+                                                            </div>
+                                                            <a class="post-title" href="/Evento/Details/@item.ID">
+                                                                <h4>@item.Nome</h4>
+                                                            </a>
+                                                            <p>
+                                                                @item.Descricao
+                                                            </p>
+                                                            <p>Início: @item.DataHoraInicio. Fim: @item.DataHoraFim.</p>
+                                                            <hr />
+                                                            @*foreach (var item2 in item.Tags)
+                        {
+                            <button type="button" class="btn btn-outline-primary mb-1">@item2.Nome</button>
+                        }*@
+
+                                                            //                                                @*<button style="margin: 2px;" class="btn btn-primary mr-3">
+                                                            //    <span class="mr-3">
+                                                            //        <i class="fa fa-thumbs-up"></i>
+                                                            //    </span>Like
+                                                            //</button>
+                                                            //<button style="margin: 2px;" class="btn btn-primary mr-3">
+                                                            //    <span>
+                                                            //        <i class="fa fa-thumbs-down"></i>
+                                                            //    </span>Dislike
+                                                            //</button>
+
+                                                            //<button class="btn btn-secondary">
+                                                            //    <span class="mr-3">
+                                                            //        <i class="fa fa-reply"></i>
+                                                            //    </span>Compartilhar
+                                                            //</button>*@
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
                                             <div id="about-me" class="tab-pane fade">
                                                 <div class="profile-about-me">
                                                     <div class="pt-4 border-bottom-1 pb-4">
@@ -179,9 +229,9 @@
                                                 </div>
                                                 <div class="profile-skills pt-2 border-bottom-1 pb-2">
                                                     <h4 class="text-primary mb-4">Gostos Pessoais</h4>
-                                                    <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Narguile</a>
+                                                    <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Festas</a>
                                                     <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Bebidas</a>
-                                                    <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Funk</a>
+                                                    <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Música</a>
                                                     <a href="javascript:void()" class="btn btn-outline-dark btn-rounded pl-4 my-3 my-sm-0 pr-4 mr-3 m-b-10">Novas Amizades</a>
                                                 </div>
                                                 <br />

@@ -9,7 +9,7 @@ namespace DataAcessObject
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Caio Fabeni\Documents\ConnectionParty.mdf;Integrated Security=True;Connect Timeout=30");
+            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Caio Fabeni\Documents\ConnectionParty1.mdf;Integrated Security=True;Connect Timeout=30");
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -21,7 +21,7 @@ namespace DataAcessObject
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Evento> Eventos { get; set; }
-        public DbSet<Tags> Tags { get; set; }
+        public DbSet<Tags> Tags { get; set; }  
         public DbSet<Comentario> Comentarios { get; set; }
     }
 }

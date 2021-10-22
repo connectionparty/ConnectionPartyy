@@ -177,7 +177,7 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-                    Evento evento = await db.Eventos.Include(c => c.Tags).Include(c => c.Comentarios).Include(c => c.Organizador).Include(c => c.Participantes).FirstOrDefaultAsync(c => c.ID == id);
+                    Evento evento = await db.Eventos.Include(c => c.Tags).Include(c => c.Organizador).Include(c => c.Participantes).Include(c => c.Comentarios).ThenInclude(c=> c.Usuario).FirstOrDefaultAsync(c => c.ID == id);
                     if (evento == null)
                     {
                         eventoResponse.Success = false;
@@ -223,7 +223,6 @@ namespace Service
         public async Task<DataResponse<Evento>> LerEventosPreferencia(int idUser)
         {
             DataResponse<Evento> eventoResponse = new DataResponse<Evento>();
-
             try
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())

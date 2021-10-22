@@ -108,7 +108,7 @@ namespace Service
             {
                 using (ConnectionPartyDBContext db = new ConnectionPartyDBContext())
                 {
-                    Usuario usuario = await db.Usuarios.Include(c => c.Tags).FirstOrDefaultAsync(c => c.ID == id);
+                    Usuario usuario = await db.Usuarios.Include(c => c.Tags).Include(c => c.EventosCriados).Include(c => c.EventosParticipados).FirstOrDefaultAsync(c => c.ID == id);
                     if (usuario == null)
                     {
                         response.Success = false;

@@ -10,6 +10,7 @@ using Service.Interfaces;
 using Service.Responses;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,8 +65,6 @@ namespace MVCPresentationLayer.Controllers
 
             string[] tags = this.Request.Form["Tags"].ToString().Split(',');
             string[] usuarios = this.Request.Form["Participantes"].ToString().Split(',');
-            string[] documento = this.Request.Form["PrecisaDocumento"].ToString().Split(',');
-            string[] ehPublico = this.Request.Form["EhPublico"].ToString().Split(',');
 
             if (responseUsuario.Success)
             {
@@ -83,12 +82,15 @@ namespace MVCPresentationLayer.Controllers
             }
 
             evento.Participantes = new List<Usuario>();
-            foreach (var item in usuarios)
+            if (viewModel.Participantes != null)
             {
-                evento.Participantes.Add(new Usuario()
+                foreach (var item in usuarios)
                 {
-                    ID = int.Parse(item)
-                });
+                    evento.Participantes.Add(new Usuario()
+                    {
+                        ID = int.Parse(item)
+                    });
+                }
             }
 
             evento.Tags = new List<Tags>();
@@ -121,6 +123,7 @@ namespace MVCPresentationLayer.Controllers
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
+            EventoComentario eventoComentario = new EventoComentario();
             if (!id.HasValue)
             {
                 return await this.Index();

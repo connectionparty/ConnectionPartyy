@@ -46,7 +46,7 @@
     <div class="form-group">
         <center><h4 class="container-black">Informações Gerais</h4></center>
         <br />
-        <label>Nome do Evento</label>
+        <label>Nome do evento</label>
         <br />
         <input style="border-color: black; color: black;" type="text" name="Nome" size="140" class="form-control" placeholder="Digite o nome do evento">
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="flex-content">
         <div style="margin: 2px;" class="form-group">
-            <label>Valor R$</label>
+            <label>Valor</label>
             <br />
             <input style="margin: 2px; border-color: black; color: black;" size="70" type="text" name="Valor" class="form-control" placeholder="Digite o valor do evento" />
         </div>
@@ -81,7 +81,7 @@
     </div>
     <br />
     <div class="col-sm-9">
-        <p>Tipo do Evento</p>
+        <p>Tipo do evento</p>
         <div class="custom-control custom-radio">
             <input type="radio" id="customRadio3" name="EhPublico" value="true" class="custom-control-input">
             <label class="custom-control-label" for="customRadio3">Público</label>
@@ -126,22 +126,24 @@
     <br />
     <br />
     <div>
+    <hr />
         <center><h4 class="container-black">Data do Evento</h4></center>
-        <label>Data de inicio</label>
+        <label>Data de início</label>
         <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraInicio" class="form-control">
     </div>
     <br />
     <div>
-        <label>Data de Término</label>
+        <label>Data de término</label>
         <input style="border-color: black; color: black;" type="datetime-local" name="DataHoraFim" class="form-control">
     </div>
     <br />
+    <hr />
     <center><h4 class="container-black">Endereço</h4></center>
     <div class="flex-content">
         <div style="margin: 2px;">
             <label>CEP</label>
             <br />
-            <input style="border-color: black; color: black;" name="cep" type="text" id="cep" value="" size="10" maxlength="9" class="form-control" placeholder="Digite o CEP" />
+            <input style="border-color: black; color: black;" name="cep" type="number" id="cep" value="" size="10" maxlength="9" class="form-control" placeholder="Digite o CEP" />
         </div>
         <div style="margin: 2px;">
             <label>Rua</label>
@@ -159,21 +161,25 @@
     </div>
     <div class="flex-content">
         <div style="margin: 2px; border-color: black;">
+            <br />
             <label>Complemento</label>
             <br />
             <input style="border-color: black; color: black;" name="Complemento" type="text" size="50" class="form-control" placeholder="Digite o complemento" />
         </div>
         <div style="margin: 2px; border-color: black;">
+            <br />
             <label>Número</label>
             <br />
-            <input style="border-color: black; color: black;" name="Numero" type="text" size="15" class="form-control" placeholder="Digite o número" />
+            <input style="border-color: black; color: black;" name="Numero" type="number" size="15" class="form-control" placeholder="Digite o número" />
         </div>
         <div style="margin: 2px;">
+            <br />
             <label>Cidade</label>
             <br />
             <input style="border-color: black; color: black;" name="cidade" type="text" id="cidade" size="50" class="form-control" placeholder="Digite a cidade" />
         </div>
         <div style="margin: 2px;">
+            <br />
             <label>Estado</label>
             <br />
             <input style="border-color: black; color: black;" name="uf" type="text" id="uf" size="2" class="form-control" placeholder="UF" />

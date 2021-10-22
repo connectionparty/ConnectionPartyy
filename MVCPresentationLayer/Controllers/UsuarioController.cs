@@ -67,15 +67,18 @@ namespace MVCPresentationLayer.Controllers
         [Authorize]
         public async Task<IActionResult> Profile()
         {
-            //C:\Users\Caio Fabeni\Desktop\ConnectionParty-d333d814a75248c92f13eae19401980be2e88c8f\MVCPresentationLayer\wwwroot\imgPessoa\5.jpg
             string id = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            //string filePath = "~/imgPessoa/" + id + ".jpg";
-            //Url.Content(filePath);
             string fileName = _appEnvironment.WebRootPath + FileHelper.PESSOA_DIRECTORY + id + FileHelper.EXTENSION;
             int idUsuario = int.Parse(id);
             ViewBag.FileName = fileName;
 
-            return View();
+            SingleResponse<Usuario> responseUsuario = await _usuarioService.GetByID(idUsuario);
+            if (!responseUsuario.Success)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            return View(responseUsuario.Item);
         }
 
         [HttpGet]
@@ -127,6 +130,17 @@ namespace MVCPresentationLayer.Controllers
             }
 
             return RedirectToAction("Profile", "Usuario");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            foreach (var item in this.Request.Cookies.Keys)
+            {
+                this.Response.Cookies.Delete(item);
+            }
+            return RedirectToAction("Login", "Usuario");
         }
 
         [Authorize]

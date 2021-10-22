@@ -5,9 +5,9 @@
 
 @foreach (Domains.Evento item in Model)
 {
-
+    string Path = "~/imgEvento/" + item.ID + "/1.jpg";
 <div class="profile-uoloaded-post border-bottom-1 pb-5">
-    <img style="width: 908px; height: 359px;" src="/img/profile/profile-party-image.png" alt="" class="img-fluid">
+    <img style="width: 908px; height: 359px;" src="@Url.Content(Path)" alt="" class="img-fluid">
     <br>
     <br>
     <div>

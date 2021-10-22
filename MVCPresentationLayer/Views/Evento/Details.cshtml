@@ -28,8 +28,12 @@
     <div>
         <div>
             <center>
+                @{
+                    string Path = "~/imgEvento/" + Model.ID + "/1.jpg";
+                }
+
                 <h1> @Model.Nome </h1>
-                <img src="/img/boy.png" alt="" />
+                <img src="@Url.Content(Path)" alt="" />
                 <div class="flex-content">
                     <div>
                         <p style=" margin:3px;">Organizado por </p>
@@ -54,10 +58,10 @@
                                 <h3 class="m-b-0">@Model.Dislikes</h3><span>Dislikes</span>
                             </div>
                             <div class="col">
-                                <h3 class="m-b-0">@Model.Participantes.Count</h3><span>Marcaram Presença</span>
+                                <h3 class="m-b-0">@Model.Participantes.Count</h3><span>Marcaram presença</span>
                             </div>
                             <div class="col">
-                                <h3 class="m-b-0">@Model.QtdMaximaPessoas</h3><span>Maximo De Pessoas</span>
+                                <h3 class="m-b-0">@Model.QtdMaximaPessoas</h3><span>Máximo de pessoas</span>
                             </div>
                         </div>
                         <br>
@@ -89,7 +93,7 @@
                     </div>
                 </div>
                 <div class="profile-blog pt-3 border-bottom-1 pb-1">
-                    <h4 class="text-primary d-inline">Descrição Do Evento</h4><a href="javascript:void()" class="pull-right f-s-16"></a>
+                    <h4 class="text-primary d-inline">Descrição do evento</h4><a href="javascript:void()" class="pull-right f-s-16"></a>
                     <p>@Model.Descricao</p>
                 </div>
 
@@ -112,30 +116,30 @@
                 <br />
                 @if (Model.Valor > 0)
                 {
-                    <h4 class="text-primary d-inline">Valor R$</h4>
+                    <h4 class="text-primary d-inline">Valor</h4>
                     <p>@Model.Valor</p>
                 }
                 @if (Model.Valor == null)
                 {
-                    <h4 class="text-primary d-inline">Valor R$</h4>
+                    <h4 class="text-primary d-inline">Valor</h4>
                     <p>Gratuito</p>
                 }
 
                 <br />
                 @if (Model.IdadeMinima > 0)
                 {
-                    <h4 class="text-primary d-inline">Idade Minima</h4>
+                    <h4 class="text-primary d-inline">Idade mínima</h4>
                     <p>@Model.IdadeMinima</p>
                 }
                 @if (Model.IdadeMinima == 0)
                 {
-                    <h4 class="text-primary d-inline">Idade Minima</h4>
+                    <h4 class="text-primary d-inline">Idade mínima</h4>
                     <p>Livre para todas as idades</p>
                 }
 
                 <br />
 
-                <h4 class="text-primary d-inline">Precisa Apresentar Documentos</h4>
+                <h4 class="text-primary d-inline">Precisa apresentar documentos</h4>
 
                 @if (Model.PrecisaDocumento)
                 {
@@ -146,22 +150,21 @@
                     <p>Não</p>
                 }
                 <br />
-                <h4 class="text-primary d-inline">Qual O Tipo Do Evento</h4>
-                <p>RESPOSTA AQUI</p>
+                <h4 class="text-primary d-inline">Qual o tipo do evento</h4>
+                @if (Model.EhPublico == true)
+                {
+                    <p>Público</p>
+                }
+                else
+                {
+                    <p>Privado</p>
+                }
                 <br />
-                <h4 class="text-primary d-inline">Quantidade Máxima De Pessoas</h4>
+                <h4 class="text-primary d-inline">Quantidade máxima de pessoas</h4>
                 <p>@Model.QtdMaximaPessoas</p>
                 <br />
                 <hr />
-                <!-- CAMPO DE COMENTARIO-->
-                @*<form action=@Url.Action("Comentario") method="post">
-            <div class="post-input">
-                <input type="hidden" value="@Model.ID" name="ID" />
-                <textarea name="Comentario" id="textarea" cols="30" rows="5" class="form-control bg-transparent" placeholder="Digite seu comentário aqui"></textarea> <a href="javascript:void()"><i class="ti-clip"></i> </a>
-                <br />
-                <input type="submit" class="btn btn-primary" />
-            </div>
-        </form>*@
+
 
                 <!-- CAMPO DE COMENTARIO TESTE-->
 
@@ -184,65 +187,31 @@
                             <li class="comment">
                                 <div class="avatar">
                                     <a href="#">
-                                        <img src="https://secure.gravatar.com/avatar/de764cb701641bd5ca3419fda6186edb?d=retro&s=55" /> <!--AQUI VAI A FOTO DO USUARIO QUE COMENTOU-->
+                                        @{
+                                            int id = item.UsuarioID;
+                                            string filePath = "~/imgPessoa/" + id + ".jpg";
+                                        }
+                                        <img style="width: 100px; height: 100px;" class="rounded-circle" src="@Url.Content(filePath)" /> <!--AQUI VAI A FOTO DO USUARIO QUE COMENTOU-->
                                     </a>
                                 </div>
                                 <div class="comment__content">
                                     <header>
                                         <a href="#">
-                                            <span class="user__link">@Model.</span>
+                                            <span class="user__link">@item.Usuario.Nome</span>
                                         </a>
-                                        <span class="comment__pub-date"> - posted 1 week ago</span>
                                         <a href="#" title="report abuse" class="comment__action">
-                                            <i class="fa fa-exclamation-triangle comment__action--report-abuse" aria-hidden="true"></i>
                                         </a>
                                     </header>
                                     <p>
-                                        @Model.Comentarios
+                                        @item.Texto
                                     </p>
                                     <footer class="comment__action--footer">
-                                        <a href="#" title="like" class="comment__action">like</a>
-                                        <a href="#" title="reply" class="comment__action">reply</a>
+                                        <a href="#" title="like" class="comment__action">Curtir</a>
+                                        <a href="#" title="like" class="comment__action">Descurtir</a>
+                                        <a href="#" title="reply" class="comment__action">Responder</a>
                                     </footer>
                                 </div>
-                                <ul class="comment__replies">
-                                    <li class="comment">
-                                        <div class="avatar">
-                                            <a href="#">
-                                                <img src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_53.png"
-                                                     alt="Eva photo avatar" class="avatar__img">
-                                            </a>
-                                        </div>
-                                        <div class="comment__content">
-                                            <header>
-                                                <a href="#">
-                                                    <span class="user__link">Eva</span>
-                                                </a>
-                                                <span class="comment__pub-date"> - posted 1 week ago</span>
-                                                <a href="#" title="report abuse" class="comment__action">
-                                                    <i class="fa fa-exclamation-triangle comment__action--report-abuse" aria-hidden="true"></i>
-                                                </a>
-                                            </header>
-                                            <p>
-                                                Sed felis lorem, venenatis sed malesuada vitae, tempor vel turpis. Mauris in dui velit, vitae mollis
-                                                risus.
-                                            </p>
-                                            <footer class="comment__action--footer">
-                                                <a href="#" title="like" class="comment__action">like</a>
-                                                <a href="#" title="reply" class="comment__action">reply</a>
-                                            </footer>
-                                        </div>
-                                    </li>
-                                    <li class="comment">
-                                        <div class="avatar">
-                                            <a href="#">
-                                                <img src="http://numbersarelife.com/nal/wp-content/uploads/2012/10/youre-faking-55x55.jpg"
-                                                     alt="Joe photo avatar" class="avatar__img">
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
 

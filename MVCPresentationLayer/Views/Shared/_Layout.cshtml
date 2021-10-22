@@ -41,29 +41,31 @@
             @*Botão para cadastrar eventos na tela inicial*@
             <li class="nav-item active">
                 <a class="nav-link" href="/Evento/Register">
-                    <i class="fas fa-fw fa-map-marker"></i>
+                    <i class="fa">&#xf044;</i>
                     <span>Cadastrar Evento</span>
                 </a>
             </li>
             @*Botão para ir para o feed de eventos*@
             <li class="nav-item active">
                 <a class="nav-link" href="/Evento/Index">
-                    <i class="fas fa-fw fa-map-marker"></i>
+                    <i class="fa">&#xf274;</i>
                     <span>Eventos</span>
                 </a>
             </li>
+
             <hr class="sidebar-divider">
+
             @*Botão para ir para a tela de login de usuario*@
             <li class="nav-item active">
                 <a class="nav-link" href="/Usuario/Login">
-                    <i class="fas fa-fw fa-map-marker"></i>
+                    <i class="fa">&#xf007;</i>
                     <span>Login</span>
                 </a>
             </li>
             @*Botão para ir para a tela de registro de usuario*@
             <li class="nav-item active">
                 <a class="nav-link" href="/Usuario/Register">
-                    <i class="fas fa-fw fa-map-marker"></i>
+                    <i class="fa">&#xf234;</i>
                     <span>Registrar-se</span>
                 </a>
             </li>
@@ -88,7 +90,6 @@
                     </button>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <!--FICA AI-->
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
@@ -244,9 +245,11 @@
 
                             @if (User.Identity.IsAuthenticated)
                             {
+                                string id = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                                string filePath = "~/imgPessoa/" + id + ".jpg";
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">
+                    <img class="img-profile rounded-circle" src="@Url.Content(filePath)" style="max-width: 60px">
                     <span class="ml-2 d-none d-lg-inline text-white small">@User.Identity.Name</span>
                 </a> }
             else
@@ -274,7 +277,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/Usuario/Logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

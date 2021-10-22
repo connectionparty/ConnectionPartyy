@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\imgEvento\1005\**" />
+    <Compile Remove="wwwroot\imgEvento\1006\**" />
+    <Content Remove="wwwroot\imgEvento\1005\**" />
+    <Content Remove="wwwroot\imgEvento\1006\**" />
+    <EmbeddedResource Remove="wwwroot\imgEvento\1005\**" />
+    <EmbeddedResource Remove="wwwroot\imgEvento\1006\**" />
+    <None Remove="wwwroot\imgEvento\1005\**" />
+    <None Remove="wwwroot\imgEvento\1006\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
